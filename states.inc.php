@@ -4,61 +4,80 @@ $machinestates = array(
         "name" => "gameSetup",
         "description" => "",
         "type" => "manager",
-        "transitions" => array("" => 2)
-    ),
-
-    2 => array(
-        "name" => "kai",
-        "description" => clienttranslate('${actplayer} is in Kai phase (開)'),
-        "descriptionmyturn" => clienttranslate('${you} are in Kai phase (開)'),
-        "type" => "activeplayer",
-        "action" => "stKai",
-        "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 3, "skip" => 3)
-    ),
-
-    3 => array(
-        "name" => "gen",
-        "description" => clienttranslate('${actplayer} is in Gen phase (現)'),
-        "descriptionmyturn" => clienttranslate('${you} are in Gen phase (現)'),
-        "type" => "activeplayer",
-        "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 4)
-    ),
-
-    4 => array(
-        "name" => "sen",
-        "description" => clienttranslate('${actplayer} is in Sen phase (選)'),
-        "descriptionmyturn" => clienttranslate('${you} are in Sen phase (選)'),
-        "type" => "activeplayer",
-        "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 5)
+        "action" => "stGameSetup",
+        "transitions" => array("" => 10)
     ),
 
     5 => array(
+        "name" => "debug",
+        "description" => "",
+        "descriptionmyturn" => "",
+        "type" => "activeplayer",
+        "possibleactions" => array("debugFlipPiece", "debugMovePiece", "nextPhase"),
+        "transitions" => array("next" => 10)
+    ),
+
+    10 => array(
+        "name" => "kai",
+        "description" => "",
+        "descriptionmyturn" => "",
+        "type" => "activeplayer",
+        "action" => "stKai",
+        "possibleactions" => array("nextPhase"),
+        "transitions" => array("next" => 20, "skip" => 20)
+    ),
+
+    20 => array(
+        "name" => "genMove",
+        "description" => "",
+        "descriptionmyturn" => "",
+        "type" => "activeplayer",
+        "possibleactions" => array("selectInsidePiece", "movePieceToHand", "nextPhase"),
+        "transitions" => array("next" => 30)
+    ),
+
+    25 => array(
+        "name" => "gen",
+        "description" => "",
+        "descriptionmyturn" => "",
+        "type" => "activeplayer",
+        "possibleactions" => array("nextPhase"),
+        "transitions" => array("next" => 30)
+    ),
+
+    30 => array(
+        "name" => "sen",
+        "description" => "",
+        "descriptionmyturn" => "",
+        "type" => "activeplayer",
+        "possibleactions" => array("selectDeckPiece", "movePieceFromDeck", "nextPhase"),
+        "transitions" => array("next" => 40)
+    ),
+
+    40 => array(
         "name" => "tsumuHatsu",
-        "description" => clienttranslate('${actplayer} is in Tsumu/Hatsu phase (積/発)'),
-        "descriptionmyturn" => clienttranslate('${you} are in Tsumu/Hatsu phase (積/発)'),
+        "description" => "",
+        "descriptionmyturn" => "",
         "type" => "activeplayer",
         "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 6)
+        "transitions" => array("next" => 50)
     ),
 
-    6 => array(
+    50 => array(
         "name" => "in",
-        "description" => clienttranslate('${actplayer} is in In phase (隠)'),
-        "descriptionmyturn" => clienttranslate('${you} are in In phase (隠)'),
+        "description" => "",
+        "descriptionmyturn" => "",
         "type" => "activeplayer",
         "possibleactions" => array("nextPhase"),
-        "transitions" => array("endTurn" => 7)
+        "transitions" => array("endTurn" => 60)
     ),
 
-    7 => array(
+    60 => array(
         "name" => "endTurn",
         "description" => "",
         "type" => "game",
         "action" => "stEndTurn",
-        "transitions" => array("next" => 2)
+        "transitions" => array("next" => 20)
     ),
 
     99 => array(
