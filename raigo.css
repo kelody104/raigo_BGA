@@ -1,11 +1,25 @@
 #raigo-root {
   position: relative;
-  min-height: 600px;
+  width: 1200px;
+  height: 620px;
+  margin: 0 auto;
+  background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background-attachment: fixed;
+  overflow: hidden;
+  font-family: 'Outfit', 'Inter', 'Roboto', sans-serif;
+  color: #e0e0e0;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 #raigo-board {
-  min-height: 600px;
   position: relative;
+  width: 1160px;
+  height: 580px;
+  margin: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,13 +33,55 @@
 /* 中央の基準ライン（水平） */
 #raigo-center-line {
   position: absolute;
-  left: 0;
-  right: 0;
   top: 50%;
+  left: 5%;
+  width: 90%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00f2ff, transparent);
+  box-shadow: 0 0 15px #00f2ff, 0 0 5px #00f2ff;
   transform: translateY(-50%);
-  height: 0;
-  border-top: 2px solid rgba(0, 0, 0, 0.35);
-  pointer-events: none; /* クリック操作を妨げない */
+  z-index: 5;
+  pointer-events: none;
+  /* クリック操作を妨げない */
+}
+
+/* 各コンテナのベース Glassmorphism */
+.row-container,
+/* 基本コンテナ（Glassmorphism） */
+.row-container,
+.block-container,
+.deck-container,
+.tower-column,
+.exclusion-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+/* プレイマット専用スタイル */
+.playmat-container {
+  background-image: url('file:///C:/Users/toshi/.gemini/antigravity/brain/9e9b186d-4aef-4ac6-a938-d021ec2d05cc/uploaded_media_1769963787463.jpg');
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+.playmat-top {
+  top: 40px;
+  transform: rotate(180deg);
+  /* 相手側は上下反転させて視覚的整合性をとる */
+  transform-origin: center center;
+}
+
+.playmat-bottom {
+  bottom: 40px;
 }
 
 /* 除外駒コンテナ (中央線上) */
@@ -34,11 +90,16 @@
   width: 35px;
   height: 35px;
   top: 50%;
-  left: calc(50% + 425px); /* プレイヤーA視点で右端 */
+  left: 10px;
+  /* 画面左端（ボード内）に固定 */
   transform: translateY(-50%);
-  background-color: rgba(128, 128, 128, 0.26);
-  border: 1px solid rgba(128, 128, 128, 0.45);
-  border-radius: 4px;
+  z-index: 6;
+}
+
+/* ボード回転時（相手プレイヤー視点）でも視覚的な左側に固定 */
+#raigo-board.board-rotated .exclusion-container {
+  left: auto;
+  right: 10px;
 }
 
 /* 中央線から15px空けた上下のコンテナ（横840×縦35） */
@@ -47,19 +108,15 @@
   width: 840px;
   height: 35px;
   left: 50%;
-  background-color: rgba(128, 128, 128, 0.26); /* 少し濃く */
-  border: 1px solid rgba(128, 128, 128, 0.45);
-  border-radius: 6px;
+  transform: translateX(-50%);
 }
 
 .row-top {
-  top: calc(50% - 15px - 35px); /* 中央線の上側に15px空ける */
-  transform: translateX(-50%);
+  top: calc(50% - 35px - 10px);
 }
 
 .row-bottom {
-  top: calc(50% + 15px); /* 中央線の下側に15px空ける */
-  transform: translateX(-50%);
+  top: calc(50% + 10px);
 }
 
 /* 中央線から65px空けた上下のコンテナ（横210×縦225） */
@@ -67,11 +124,10 @@
   position: absolute;
   width: 245px;
   height: 210px;
-  left: calc(50% + 192.5px); /* deck/playmat から右へ560+35 */
-  background-color: rgba(128, 128, 128, 0.26);
-  border: 1px solid rgba(128, 128, 128, 0.45);
-  border-radius: 6px;
-  display: none; /* 非表示 */
+  left: calc(50% + 192.5px);
+  /* deck/playmat から右へ560+35 */
+  display: none;
+  /* 非表示 */
 }
 
 /* tower 列コンテナ（縦210 × 横35、絶対配置） */
@@ -79,28 +135,79 @@
   position: absolute;
   width: 35px;
   height: 210px;
-  background-color: rgba(128, 128, 128, 0.26);
-  border: 1px solid rgba(128, 128, 128, 0.45);
-  border-radius: 4px;
 }
 
-/* towerA列の位置指定 */
-#towerA1 { left: calc(50% + 192.5px - 385px); top: calc(50% - 65px - 210px); }
-#towerA2 { left: calc(50% + 192.5px - 420px); top: calc(50% - 65px - 210px); }
-#towerA3 { left: calc(50% + 192.5px - 455px); top: calc(50% - 65px - 210px); }
-#towerA4 { left: calc(50% + 192.5px - 490px); top: calc(50% - 65px - 210px); }
-#towerA5 { left: calc(50% + 192.5px - 525px); top: calc(50% - 65px - 210px); }
-#towerA6 { left: calc(50% + 192.5px - 560px); top: calc(50% - 65px - 210px); }
-#towerA7 { left: calc(50% + 192.5px - 595px); top: calc(50% - 65px - 210px); }
+/* tower_rival列の位置指定 */
+#tower_rival_1 {
+  left: calc(50% + 192.5px - 385px);
+  top: calc(50% - 65px - 210px);
+}
 
-/* towerB列の位置指定 */
-#towerB1 { left: calc(50% + 192.5px); top: calc(50% + 65px); }
-#towerB2 { left: calc(50% + 192.5px + 35px); top: calc(50% + 65px); }
-#towerB3 { left: calc(50% + 192.5px + 70px); top: calc(50% + 65px); }
-#towerB4 { left: calc(50% + 192.5px + 105px); top: calc(50% + 65px); }
-#towerB5 { left: calc(50% + 192.5px + 140px); top: calc(50% + 65px); }
-#towerB6 { left: calc(50% + 192.5px + 175px); top: calc(50% + 65px); }
-#towerB7 { left: calc(50% + 192.5px + 210px); top: calc(50% + 65px); }
+#tower_rival_2 {
+  left: calc(50% + 192.5px - 420px);
+  top: calc(50% - 65px - 210px);
+}
+
+#tower_rival_3 {
+  left: calc(50% + 192.5px - 455px);
+  top: calc(50% - 65px - 210px);
+}
+
+#tower_rival_4 {
+  left: calc(50% + 192.5px - 490px);
+  top: calc(50% - 65px - 210px);
+}
+
+#tower_rival_5 {
+  left: calc(50% + 192.5px - 525px);
+  top: calc(50% - 65px - 210px);
+}
+
+#tower_rival_6 {
+  left: calc(50% + 192.5px - 560px);
+  top: calc(50% - 65px - 210px);
+}
+
+#tower_rival_7 {
+  left: calc(50% + 192.5px - 595px);
+  top: calc(50% - 65px - 210px);
+}
+
+/* tower_myself列の位置指定 */
+#tower_myself_1 {
+  left: calc(50% + 192.5px);
+  top: calc(50% + 65px);
+}
+
+#tower_myself_2 {
+  left: calc(50% + 192.5px + 35px);
+  top: calc(50% + 65px);
+}
+
+#tower_myself_3 {
+  left: calc(50% + 192.5px + 70px);
+  top: calc(50% + 65px);
+}
+
+#tower_myself_4 {
+  left: calc(50% + 192.5px + 105px);
+  top: calc(50% + 65px);
+}
+
+#tower_myself_5 {
+  left: calc(50% + 192.5px + 140px);
+  top: calc(50% + 65px);
+}
+
+#tower_myself_6 {
+  left: calc(50% + 192.5px + 175px);
+  top: calc(50% + 65px);
+}
+
+#tower_myself_7 {
+  left: calc(50% + 192.5px + 210px);
+  top: calc(50% + 65px);
+}
 
 /* oumon コンテナ（半径50.25px = 直径100.5px の円形） */
 .oumon-container {
@@ -108,8 +215,9 @@
   width: 100.5px;
   height: 100.5px;
   border-radius: 50%;
-  background-color: rgba(128, 128, 128, 0.26);
-  border: 1px solid rgba(128, 128, 128, 0.45);
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.3), inset 0 0 10px rgba(0, 242, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,49 +226,53 @@
 /* oumon 内の中央コンテナ（35×35、濃いめのグレー） */
 .oumon-inner {
   position: absolute;
-  width: 35px;
-  height: 35px;
-  background-color: rgba(128, 128, 128, 0.45);
-  border-radius: 4px;
-  border: 1px solid rgba(128, 128, 128, 0.6);
   top: 50%;
   left: 50%;
+  width: 35px;
+  height: 35px;
+  border: 2px solid rgba(0, 242, 255, 0.7);
+  border-radius: 50%;
   transform: translate(-50%, -50%);
+  background: rgba(0, 242, 255, 0.1);
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
-/* playmatA 側の配置（右からA3,A2,A1の順） */
-.oumon-a {
+/* playmat_rival 側の配置（右からA3,A2,A1の順） */
+.oumon-rival {
   top: 50%;
   transform: translateY(-50%);
+  border: 1px solid rgba(138, 43, 226, 0.6);
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.3), inset 0 0 10px rgba(138, 43, 226, 0.2);
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
 }
 
-.oumon-a3 {
+.oumon-rival-3 {
   left: 0;
 }
 
-.oumon-a2 {
+.oumon-rival-2 {
   left: 115.5px;
 }
 
-.oumon-a1 {
+.oumon-rival-1 {
   left: 231px;
 }
 
-/* playmatB 側の配置（同じ配置） */
-.oumon-b {
+/* playmat_myself 側の配置（同じ配置） */
+.oumon-myself {
   top: 50%;
   transform: translateY(-50%);
 }
 
-.oumon-b3 {
+.oumon-myself-3 {
   left: calc(100% - 100.5px);
 }
 
-.oumon-b2 {
+.oumon-myself-2 {
   left: calc(100% - 100.5px - 115.5px);
 }
 
-.oumon-b1 {
+.oumon-myself-1 {
   left: calc(100% - 100.5px - 231px);
 }
 
@@ -169,30 +281,31 @@
   position: absolute;
   width: 35px;
   height: 35px;
-  background-color: rgba(128, 128, 128, 0.45);
-  border: 1px solid rgba(128, 128, 128, 0.6);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 4px;
   top: 50%;
   transform: translateY(-50%);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-/* playmatA 側の handA1, handA2 配置 */
-.hand-a2 {
-  /* oumonA1 の右に 15px 空き */
+/* playmat_rival 側の hand_rival_1, hand_rival_2 配置 */
+.hand-rival-2 {
+  /* oumon_rival_1 の右に 15px 空き */
   left: calc(231px + 100.5px + 15px);
 }
 
-.hand-a1 {
-  /* handA2 の右に 140px 空き */
+.hand-rival-1 {
+  /* hand_rival_2 の右に 140px 空き */
   left: calc(231px + 100.5px + 15px + 35px + 140px);
 }
 
-/* playmatB 側の handB1, handB2 配置 */
-.hand-b2 {
+/* playmat_myself 側の hand_myself_1, hand_myself_2 配置 */
+.hand-myself-2 {
   left: calc(100% - 100.5px - 231px - 15px - 35px);
 }
 
-.hand-b1 {
+.hand-myself-1 {
   left: calc(100% - 100.5px - 231px - 15px - 35px - 140px - 35px);
 }
 
@@ -206,47 +319,47 @@
   border-radius: 4px;
 }
 
-/* playmatA 側の insideA1,A2,A3 配置（上下逆） */
-.inside-a {
-  /* handA1とhandA2の中間 */
+/* playmat_rival 側の inside_rival_1,2,3 配置（上下逆） */
+.inside-rival {
+  /* hand_rival_1とhand_rival_2の中間 */
   left: calc(231px + 100.5px + 15px + 35px + 70px + 17.5px - 35px);
 }
 
-.inside-a2 {
+.inside-rival-2 {
   top: 50%;
   transform: translateY(-50%);
 }
 
-.inside-a1 {
-  /* insideA2の50px上 */
+.inside-rival-1 {
+  /* inside_rival_2の50px上 */
   top: calc(50% - 50px);
   transform: translateY(-50%);
 }
 
-.inside-a3 {
-  /* insideA2の50px下 */
+.inside-rival-3 {
+  /* inside_rival_2の50px下 */
   top: calc(50% + 50px);
   transform: translateY(-50%);
 }
 
-/* playmatB 側の insideB1,B2,B3 配置 */
-.inside-b {
+/* playmat_myself 側の inside_myself_1,2,3 配置 */
+.inside-myself {
   left: calc(100% - 100.5px - 231px - 15px - 35px - 70px - 17.5px);
 }
 
-.inside-b2 {
+.inside-myself-2 {
   top: 50%;
   transform: translateY(-50%);
 }
 
-.inside-b1 {
-  /* insideB2の50px上 */
+.inside-myself-1 {
+  /* inside_myself_2の50px上 */
   top: calc(50% - 50px);
   transform: translateY(-50%);
 }
 
-.inside-b3 {
-  /* insideB2の50px下 */
+.inside-myself-3 {
+  /* inside_myself_2の50px下 */
   top: calc(50% + 50px);
   transform: translateY(-50%);
 }
@@ -254,59 +367,67 @@
 /* moon コンテナ（35×35） */
 .moon-container {
   position: absolute;
-  width: 35px;
-  height: 35px;
-  background-color: rgba(128, 128, 128, 0.45);
-  border: 1px solid rgba(128, 128, 128, 0.6);
-  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: -8px 8px 0 0 rgba(255, 255, 255, 0.8), 0 0 15px rgba(0, 242, 255, 0.3);
+  transform-style: preserve-3d;
+  transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+  perspective: 1000px;
 }
 
-.moon-a {
-  /* handA1と同じ水平位置、ラインから40px下 */
+.moon-rival {
+  /* hand_rival_1と同じ水平位置、ラインから40px下 */
   left: calc(231px + 100.5px + 15px + 35px + 140px);
   top: calc(50% + 50px);
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(-45deg);
 }
 
-.moon-b {
-  /* handB1と同じ水平位置、ラインから40px上 */
+.moon-myself {
+  /* hand_myself_1と同じ水平位置、ラインから40px上 */
   left: calc(100% - 100.5px - 231px - 15px - 35px - 140px - 35px);
   top: calc(50% - 50px);
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotate(135deg);
 }
 
 
 
 .block-top {
-  top: calc(50% - 65px - 225px); /* 中央線の上側に65px空ける */
+  top: calc(50% - 65px - 225px);
+  /* 中央線の上側に65px空ける */
   transform: none;
 }
 
 .block-bottom {
-  top: calc(50% + 65px); /* 中央線の下側に65px空ける */
+  top: calc(50% + 65px);
+  /* 中央線の下側に65px空ける */
   transform: none;
 }
 
 /* deck/playmat を左側に、tower を右側に35px間隔で横並び配置 */
+/* deckコンテナ：山札としての厚みを演出 */
 .deck-container {
   position: absolute;
   width: 560px;
   height: 70px;
-  left: calc(50% - 402.5px); /* (560 + 35 + 210)/2 */
-  background-color: rgba(128, 128, 128, 0.26);
-  border: 1px solid rgba(128, 128, 128, 0.45);
-  border-radius: 6px;
+  left: calc(50% - 402.5px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   overflow: visible;
+  transform-style: preserve-3d;
+  transform: rotateX(15deg) rotateY(0deg) rotateZ(0deg);
+  perspective: 1000px;
 }
 
 .deck-top {
-  top: calc(50% - 65px - 70px);
-  transform: none;
+  top: calc(50% - 140px);
   left: calc(50% - 402.5px + 280px);
 }
 
 .deck-bottom {
-  top: calc(50% + 65px);
+  top: calc(50% + 70px);
   transform: none;
 }
 
@@ -315,9 +436,6 @@
   width: 560px;
   height: 140px;
   left: calc(50% - 402.5px);
-  background-color: rgba(128, 128, 128, 0.26);
-  border: 1px solid rgba(128, 128, 128, 0.45);
-  border-radius: 6px;
 }
 
 .playmat-top {
@@ -334,13 +452,16 @@
 /* kyoukokuA 内に置く単一の駒 */
 .piece-kyoukoku {
   top: 0;
-  left: calc(50% - 17.5px); /* 横幅35pxの駒を中央に配置 */
+  left: calc(50% - 17.5px);
+  /* 横幅35pxの駒を中央に配置 */
 }
 
 #pieces-container {
   position: relative;
-  width: 840px; /* 24 pieces × 35px */
-  height: 270px; /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
+  width: 840px;
+  /* 24 pieces × 35px */
+  height: 270px;
+  /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
 }
 
 #page-title {
@@ -363,12 +484,12 @@
   border: 2px solid rgba(128, 128, 128, 0.4);
   border-radius: 6px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   cursor: default;
   user-select: none;
 }
@@ -389,45 +510,51 @@
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   cursor: pointer;
   user-select: none;
 }
 
+/* フェーズパネル（隠駒）のデザイン：実物の駒と同じスタイル */
 #raigo-phase-panel {
   position: absolute;
+  top: 12px;
   left: 12px;
-  top: calc(50% - 120px);
   z-index: 10;
-
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   box-sizing: border-box;
-  padding: 8px;
 
-  background: linear-gradient(145deg, #ffb347, #ff8c00);
-  color: #2c1a0a;
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-  
+  background: linear-gradient(135deg, #d3b17d 0%, #b89150 100%);
+  border: 2px solid #8e6d3b;
+  border-radius: 8px;
+  color: #2c1b05;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0.5px 0.5px 0px rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   cursor: pointer;
   user-select: none;
-  transition: all 0.3s ease;
 }
 
-#raigo-phase-panel.panel-active-turn {
-  top: calc(50% + 30px);
+#raigo-phase-panel.panel-pos-myself {
+  top: calc(50% + 20px);
+  /* 中央線から20px下に配置 */
+}
+
+#raigo-phase-panel.panel-pos-rival {
+  top: calc(50% - 120px - 20px);
+  /* 中央線から20px上に配置 */
 }
 
 #raigo-phase-panel.panel-inactive {
@@ -443,10 +570,10 @@
 
 #raigo-phase-name {
   margin: 0;
-  font-size: 70px;
+  font-size: 80px;
   font-weight: 700;
   font-family: "HGS行書体", "行書体", serif;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .phase-tsumuHatsu {
@@ -456,14 +583,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transform: scale(0.9);
 }
 
 .phase-tsumuHatsu::before {
   content: "";
   position: absolute;
   width: 120%;
-  height: 2px;
-  background: #2c1a0a;
+  height: 3px;
+  background: #2c1b05;
   transform: rotate(-45deg);
   top: 50%;
   left: -10%;
@@ -605,7 +733,8 @@
   width: 300px;
   height: 250px;
   margin-left: 70px;
-  background-color: rgba(128, 128, 128, 0.3); /* Gray background */
+  background-color: rgba(128, 128, 128, 0.3);
+  /* Gray background */
   border-radius: 8px;
   border: 1px solid rgba(128, 128, 128, 0.5);
 }
@@ -668,6 +797,7 @@
   font-weight: 700;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
 }
+
 /* デバッグモード：駒選択状態 */
 .debug-selected {
   border: 3px solid rgba(255, 255, 0, 0.9) !important;

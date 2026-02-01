@@ -48,61 +48,61 @@
   <div id="raigo-board">
     <div id="raigo-center-line"></div>
     <div id="exclusion" class="exclusion-container"></div>
-    <div id="kyoukokuA" class="row-container row-top"></div>
-    <div id="kyoukokuB" class="row-container row-bottom"></div>
+    <div id="kyoukoku_rival" class="row-container row-top"></div>
+    <div id="kyoukoku_myself" class="row-container row-bottom"></div>
 
-    <div id="towerA" class="block-container block-top"></div>
-    <div id="towerB" class="block-container block-bottom"></div>
+    <div id="tower_rival" class="block-container block-top"></div>
+    <div id="tower_myself" class="block-container block-bottom"></div>
 
-    <div id="towerA1" class="tower-column tower-column-pos-1"></div>
-    <div id="towerA2" class="tower-column tower-column-pos-2"></div>
-    <div id="towerA3" class="tower-column tower-column-pos-3"></div>
-    <div id="towerA4" class="tower-column tower-column-pos-4"></div>
-    <div id="towerA5" class="tower-column tower-column-pos-5"></div>
-    <div id="towerA6" class="tower-column tower-column-pos-6"></div>
-    <div id="towerA7" class="tower-column tower-column-pos-7"></div>
-    <div id="towerB1" class="tower-column tower-column-pos-1"></div>
-    <div id="towerB2" class="tower-column tower-column-pos-2"></div>
-    <div id="towerB3" class="tower-column tower-column-pos-3"></div>
-    <div id="towerB4" class="tower-column tower-column-pos-4"></div>
-    <div id="towerB5" class="tower-column tower-column-pos-5"></div>
-    <div id="towerB6" class="tower-column tower-column-pos-6"></div>
-    <div id="towerB7" class="tower-column tower-column-pos-7"></div>
+    <div id="tower_rival_1" class="tower-column tower-column-pos-1"></div>
+    <div id="tower_rival_2" class="tower-column tower-column-pos-2"></div>
+    <div id="tower_rival_3" class="tower-column tower-column-pos-3"></div>
+    <div id="tower_rival_4" class="tower-column tower-column-pos-4"></div>
+    <div id="tower_rival_5" class="tower-column tower-column-pos-5"></div>
+    <div id="tower_rival_6" class="tower-column tower-column-pos-6"></div>
+    <div id="tower_rival_7" class="tower-column tower-column-pos-7"></div>
+    <div id="tower_myself_1" class="tower-column tower-column-pos-1"></div>
+    <div id="tower_myself_2" class="tower-column tower-column-pos-2"></div>
+    <div id="tower_myself_3" class="tower-column tower-column-pos-3"></div>
+    <div id="tower_myself_4" class="tower-column tower-column-pos-4"></div>
+    <div id="tower_myself_5" class="tower-column tower-column-pos-5"></div>
+    <div id="tower_myself_6" class="tower-column tower-column-pos-6"></div>
+    <div id="tower_myself_7" class="tower-column tower-column-pos-7"></div>
 
-    <div id="deckA" class="deck-container deck-top"></div>
-    <div id="deckB" class="deck-container deck-bottom"></div>
-    <div id="playmatA" class="playmat-container playmat-top">
-      <div id="moonA" class="moon-container moon-a"></div>
-      <div id="handA1" class="hand-container hand-a hand-a1"></div>
-      <div id="insideA3" class="inside-container inside-a inside-a3"></div>
-      <div id="insideA2" class="inside-container inside-a inside-a2"></div>
-      <div id="insideA1" class="inside-container inside-a inside-a1"></div>
-      <div id="handA2" class="hand-container hand-a hand-a2"></div>
-      <div id="oumonA1" class="oumon-container oumon-a oumon-a1">
-        <div id="oumoncircleA1" class="oumon-inner"></div>
+    <div id="deck_rival" class="deck-container deck-top"></div>
+    <div id="deck_myself" class="deck-container deck-bottom"></div>
+    <div id="playmat_rival" class="playmat-container playmat-top">
+      <div id="moon_rival" class="moon-container moon-rival"></div>
+      <div id="hand_rival_1" class="hand-container hand-rival hand-rival-1"></div>
+      <div id="inside_rival_3" class="inside-container inside-rival inside-rival-3"></div>
+      <div id="inside_rival_2" class="inside-container inside-rival inside-rival-2"></div>
+      <div id="inside_rival_1" class="inside-container inside-rival inside-rival-1"></div>
+      <div id="hand_rival_2" class="hand-container hand-rival hand-rival-2"></div>
+      <div id="oumon_rival_1" class="oumon-container oumon-rival oumon-rival-1">
+        <div id="oumoncircle_rival_1" class="oumon-inner"></div>
       </div>
-      <div id="oumonA2" class="oumon-container oumon-a oumon-a2">
-        <div id="oumoncircleA2" class="oumon-inner"></div>
+      <div id="oumon_rival_2" class="oumon-container oumon-rival oumon-rival-2">
+        <div id="oumoncircle_rival_2" class="oumon-inner"></div>
       </div>
-      <div id="oumonA3" class="oumon-container oumon-a oumon-a3">
-        <div id="oumoncircleA3" class="oumon-inner"></div>
+      <div id="oumon_rival_3" class="oumon-container oumon-rival oumon-rival-3">
+        <div id="oumoncircle_rival_3" class="oumon-inner"></div>
       </div>
     </div>
-    <div id="playmatB" class="playmat-container playmat-bottom">
-      <div id="moonB" class="moon-container moon-b"></div>
-      <div id="handB1" class="hand-container hand-b hand-b1"></div>
-      <div id="insideB1" class="inside-container inside-b inside-b1"></div>
-      <div id="insideB2" class="inside-container inside-b inside-b2"></div>
-      <div id="insideB3" class="inside-container inside-b inside-b3"></div>
-      <div id="handB2" class="hand-container hand-b hand-b2"></div>
-      <div id="oumonB1" class="oumon-container oumon-b oumon-b1">
-        <div id="oumoncircleB1" class="oumon-inner"></div>
+    <div id="playmat_myself" class="playmat-container playmat-bottom">
+      <div id="moon_myself" class="moon-container moon-myself"></div>
+      <div id="hand_myself_1" class="hand-container hand-myself hand-myself-1"></div>
+      <div id="inside_myself_1" class="inside-container inside-myself inside-myself-1"></div>
+      <div id="inside_myself_2" class="inside-container inside-myself inside-myself-2"></div>
+      <div id="inside_myself_3" class="inside-container inside-myself inside-myself-3"></div>
+      <div id="hand_myself_2" class="hand-container hand-myself hand-myself-2"></div>
+      <div id="oumon_myself_1" class="oumon-container oumon-myself oumon-myself-1">
+        <div id="oumoncircle_myself_1" class="oumon-inner"></div>
       </div>
-      <div id="oumonB2" class="oumon-container oumon-b oumon-b2">
-        <div id="oumoncircleB2" class="oumon-inner"></div>
+      <div id="oumon_myself_2" class="oumon-container oumon-myself oumon-myself-2">
+        <div id="oumoncircle_myself_2" class="oumon-inner"></div>
       </div>
-      <div id="oumonB3" class="oumon-container oumon-b oumon-b3">
-        <div id="oumoncircleB3" class="oumon-inner"></div>
+      <div id="oumon_myself_3" class="oumon-container oumon-myself oumon-myself-3">
+        <div id="oumoncircle_myself_3" class="oumon-inner"></div>
       </div>
     </div>
   </div>

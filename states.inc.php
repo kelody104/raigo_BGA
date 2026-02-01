@@ -28,20 +28,12 @@ $machinestates = array(
     ),
 
     20 => array(
-        "name" => "genMove",
-        "description" => "",
-        "descriptionmyturn" => "",
-        "type" => "activeplayer",
-        "possibleactions" => array("selectInsidePiece", "movePieceToHand", "nextPhase"),
-        "transitions" => array("next" => 30)
-    ),
-
-    25 => array(
         "name" => "gen",
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
-        "possibleactions" => array("nextPhase"),
+        "action" => "stGen",
+        "possibleactions" => array("selectInsidePiece", "movePieceToHand", "nextPhase"),
         "transitions" => array("next" => 30)
     ),
 
@@ -50,6 +42,7 @@ $machinestates = array(
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
+        "action" => "stSen",
         "possibleactions" => array("selectDeckPiece", "movePieceFromDeck", "nextPhase"),
         "transitions" => array("next" => 40)
     ),
@@ -59,17 +52,19 @@ $machinestates = array(
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
-        "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 50)
+        "action" => "stTsumuHatsu",
+        "possibleactions" => array("actTsumu", "actHatsu", "nextPhase"),
+        "transitions" => array("next" => 80)
     ),
 
-    50 => array(
-        "name" => "in",
+    80 => array(
+        "name" => "kakure",
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
+        "action" => "stKakure",
         "possibleactions" => array("nextPhase"),
-        "transitions" => array("endTurn" => 60)
+        "transitions" => array("next" => 60)
     ),
 
     60 => array(
@@ -77,7 +72,7 @@ $machinestates = array(
         "description" => "",
         "type" => "game",
         "action" => "stEndTurn",
-        "transitions" => array("next" => 20)
+        "transitions" => array("next" => 10)
     ),
 
     99 => array(

@@ -11,6 +11,35 @@ class action_raigo extends APP_GameAction
         }
     }
 
+    public function actTsumu()
+    {
+        self::setAjaxMode();
+        $pieceId = self::getArg("pieceId", AT_int);
+        $towerId = self::getArg("towerId", AT_alphanum);
+        
+        $this->game->actTsumu($pieceId, $towerId);
+        self::ajaxResponse();
+    }
+
+    public function actHatsu()
+    {
+        self::setAjaxMode();
+        $pieceId = self::getArg("pieceId", AT_int);
+        $kyoukokuId = self::getArg("kyoukokuId", AT_alphanum);
+        
+        $this->game->actHatsu($pieceId, $kyoukokuId);
+        self::ajaxResponse();
+    }
+
+    public function actMoveKakure()
+    {
+        self::setAjaxMode();
+        $towerId = self::getArg("towerId", AT_alphanum);
+        
+        $this->game->actMoveKakure($towerId);
+        self::ajaxResponse();
+    }
+
     public function nextPhase()
     {
         self::setAjaxMode();
