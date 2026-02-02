@@ -107,7 +107,8 @@
   position: absolute;
   width: 840px;
   height: 35px;
-  left: 50%;
+  /* 右へ35pxシフト */
+  left: calc(50% + 35px);
   transform: translateX(-50%);
 }
 
