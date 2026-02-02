@@ -638,6 +638,12 @@ class Raigo extends Table
         // $this->gamestate->nextState("next"); // 手動遷移に変更
     }
 
+    public function nextPhase()
+    {
+        self::checkAction("nextPhase");
+        $this->gamestate->nextState("next");
+    }
+
     public function movePieceFromDeck($fromContainer, $toContainer)
     {
         self::checkAction("movePieceFromDeck");
