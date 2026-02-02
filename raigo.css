@@ -381,7 +381,49 @@
   }
 
 
-  /* inside コンテナ */
+  /* inside コンテナ（35×35、handA1とhandA2の間、handB1とhandB2の間） */
+  .inside-container {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-color: rgba(128, 128, 128, 0.45);
+    border: 1px solid rgba(128, 128, 128, 0.6);
+    border-radius: 4px;
+  }
+
+  .inside-rival-2 {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .inside-rival-1 {
+    /* inside_rival_2の50px上 */
+    top: calc(50% - 50px);
+    transform: translateY(-50%);
+  }
+
+  .inside-rival-3 {
+    /* inside_rival_2の50px下 */
+    top: calc(50% + 50px);
+    transform: translateY(-50%);
+  }
+
+  .inside-myself-2 {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .inside-myself-1 {
+    /* inside_myself_2の50px上 */
+    top: calc(50% - 50px);
+    transform: translateY(-50%);
+  }
+
+  .inside-myself-3 {
+    /* inside_myself_2の50px下 */
+    top: calc(50% + 50px);
+    transform: translateY(-50%);
+  }
 
 
 
