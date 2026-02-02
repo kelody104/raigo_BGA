@@ -139,37 +139,38 @@
 
 /* tower_rival列の位置指定 */
 #tower_rival_1 {
-  left: calc(50% + 192.5px - 385px);
-  top: calc(50% - 65px - 210px);
-}
-
-#tower_rival_2 {
+  /* 左へ35pxシフト: -385 -> -420 */
   left: calc(50% + 192.5px - 420px);
   top: calc(50% - 65px - 210px);
 }
 
-#tower_rival_3 {
+#tower_rival_2 {
   left: calc(50% + 192.5px - 455px);
   top: calc(50% - 65px - 210px);
 }
 
-#tower_rival_4 {
+#tower_rival_3 {
   left: calc(50% + 192.5px - 490px);
   top: calc(50% - 65px - 210px);
 }
 
-#tower_rival_5 {
+#tower_rival_4 {
   left: calc(50% + 192.5px - 525px);
   top: calc(50% - 65px - 210px);
 }
 
-#tower_rival_6 {
+#tower_rival_5 {
   left: calc(50% + 192.5px - 560px);
   top: calc(50% - 65px - 210px);
 }
 
-#tower_rival_7 {
+#tower_rival_6 {
   left: calc(50% + 192.5px - 595px);
+  top: calc(50% - 65px - 210px);
+}
+
+#tower_rival_7 {
+  left: calc(50% + 192.5px - 630px);
   top: calc(50% - 65px - 210px);
 }
 
@@ -361,8 +362,8 @@
 /* playmat_rival 側の head/cloud: Insideの左(visually right)に配置 */
 .head-rival,
 .cloud-rival {
-  /* Hand2 (下の配置でいう一番端の列) と同じ水平位置に配置 */
-  left: calc(231px + 100.5px + 85px);
+  /* Inside-left - 10px - 140px - 122.5px (3.5駒分右へ) */
+  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px - 10px - 140px - 122.5px);
 }
 
 .head-rival {
