@@ -277,6 +277,7 @@
 }
 
 /* hand コンテナ（35×35） */
+/* hand コンテナ（35×35） */
 .hand-container {
   position: absolute;
   width: 35px;
@@ -289,408 +290,412 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-/* playmat_rival 側の hand_rival_1, hand_rival_2 配置 */
+/* playmat_rival 側の hand 配置 */
 .hand-rival-2 {
   /* oumon_rival_1 の右に 15px + 70px = 85px 空き */
   left: calc(231px + 100.5px + 85px);
 }
 
 .hand-rival-1 {
+  /* +100px shift (Inside右側のスペース確保のため) */
+  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px);
+}
 
-  /* hand_rival_2 の右に 140px 空き */
-  /* head/cloud コンテナ（4駒分: 140px × 35px） */
-  .head-container,
-  .cloud-container {
-    position: absolute;
-    width: 140px;
-    height: 35px;
-    background-color: rgba(100, 149, 237, 0.15);
-    border: 1px solid rgba(100, 149, 237, 0.3);
-    border-radius: 4px;
-  }
+/* playmat_myself 側の hand 配置 */
+.hand-myself-2 {
+  left: calc(100% - 100.5px - 231px - 85px - 35px);
+}
 
-  /* playmat_rival 側の配置変更: Space確保のためInside以左を +100px シフト */
-  .hand-rival-1 {
-    /* +100px shift */
-    left: calc(231px + 100.5px + 85px + 35px + 140px + 100px);
-  }
+.hand-myself-1 {
+  /* -100px shift (Inside右側のスペース確保のため) */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px);
+}
 
-  .inside-rival {
-    /* +100px shift */
-    left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px);
-  }
+/* inside コンテナ共通（35×35） */
+.inside-container {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  background-color: rgba(128, 128, 128, 0.45);
+  border: 1px solid rgba(128, 128, 128, 0.6);
+  border-radius: 4px;
+}
 
-  .moon-rival {
-    /* +100px shift */
-    left: calc(231px + 100.5px + 85px + 35px + 140px + 100px);
-    top: calc(50% + 50px);
-    transform: translateY(-50%) rotate(-45deg);
-  }
+/* playmat_rival 側の inside, moon 配置 */
+.inside-rival {
+  /* +100px shift */
+  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px);
+}
 
-  /* Rival Head/Cloud (InsideのVisually Right = Local Leftに配置) */
-  /* Inside-left = Base + 100. Head = Inside-left - 10px - 140px */
-  .head-rival,
-  .cloud-rival {
-    left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px - 10px - 140px);
-  }
+.moon-rival {
+  /* +100px shift */
+  /* hand_rival_1と同じ水平位置、ラインから40px下 */
+  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px);
+  top: calc(50% + 50px);
+  transform: translateY(-50%) rotate(-45deg);
+}
 
-  .head-rival {
-    top: calc(50% - 50px);
-    transform: translateY(-50%);
-  }
+/* playmat_myself 側の inside, moon 配置 */
+.inside-myself {
+  /* -100px shift */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px);
+}
 
-  .cloud-rival {
-    top: calc(50% + 50px);
-    transform: translateY(-50%);
-  }
+.moon-myself {
+  /* -100px shift */
+  /* hand_myself_1と同じ水平位置、ラインから40px上 */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px);
+  top: calc(50% - 50px);
+  transform: translateY(-50%) rotate(135deg);
+}
 
-  /* playmat_myself 側の配置変更: Space確保のためInside以左を -100px シフト */
-  .hand-myself-1 {
-    /* -100px shift */
-    left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px);
-  }
+/* head/cloud コンテナ（4駒分: 140px × 35px） */
+.head-container,
+.cloud-container {
+  position: absolute;
+  width: 140px;
+  height: 35px;
+  background-color: rgba(100, 149, 237, 0.15);
+  border: 1px solid rgba(100, 149, 237, 0.3);
+  border-radius: 4px;
+}
 
-  .inside-myself {
-    /* -100px shift */
-    left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px);
-  }
+/* playmat_rival 側の head/cloud: Insideの左(visually right)に配置 */
+.head-rival,
+.cloud-rival {
+  /* Inside-left - 10px - 140px */
+  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px - 10px - 140px);
+}
 
-  .moon-myself {
-    /* -100px shift */
-    left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px);
-    top: calc(50% - 50px);
-    transform: translateY(-50%) rotate(135deg);
-  }
+.head-rival {
+  top: calc(50% - 50px);
+  transform: translateY(-50%);
+}
 
-  /* Myself Head/Cloud (InsideのVisually Right = Local Rightに配置) */
-  /* Inside-left = Base - 100. Head = Inside-left + 35px + 10px */
-  .head-myself,
-  .cloud-myself {
-    left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px + 35px + 10px);
-  }
+.cloud-rival {
+  top: calc(50% + 50px);
+  transform: translateY(-50%);
+}
 
-  .head-myself {
-    top: calc(50% - 50px);
-    transform: translateY(-50%);
-  }
+/* playmat_myself 側の head/cloud: Insideの右(visually right)に配置 */
+.head-myself,
+.cloud-myself {
+  /* Inside-left + 35px + 10px */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px + 35px + 10px);
+}
 
-  .cloud-myself {
-    top: calc(50% + 50px);
-    transform: translateY(-50%);
-  }
+.head-myself {
+  top: calc(50% - 50px);
+  transform: translateY(-50%);
+}
 
-
-  /* inside コンテナ（35×35、handA1とhandA2の間、handB1とhandB2の間） */
-  .inside-container {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    background-color: rgba(128, 128, 128, 0.45);
-    border: 1px solid rgba(128, 128, 128, 0.6);
-    border-radius: 4px;
-  }
-
-  .inside-rival-2 {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .inside-rival-1 {
-    /* inside_rival_2の50px上 */
-    top: calc(50% - 50px);
-    transform: translateY(-50%);
-  }
-
-  .inside-rival-3 {
-    /* inside_rival_2の50px下 */
-    top: calc(50% + 50px);
-    transform: translateY(-50%);
-  }
-
-  .inside-myself-2 {
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .inside-myself-1 {
-    /* inside_myself_2の50px上 */
-    top: calc(50% - 50px);
-    transform: translateY(-50%);
-  }
-
-  .inside-myself-3 {
-    /* inside_myself_2の50px下 */
-    top: calc(50% + 50px);
-    transform: translateY(-50%);
-  }
+.cloud-myself {
+  top: calc(50% + 50px);
+  transform: translateY(-50%);
+}
 
 
+/* inside 詳細位置指定 (縦方向) */
+.inside-rival-2,
+.inside-myself-2 {
+  top: 50%;
+  transform: translateY(-50%);
+}
 
-  .block-top {
-    top: calc(50% - 65px - 225px);
-    /* 中央線の上側に65px空ける */
-    transform: none;
-  }
+.inside-rival-1,
+.inside-myself-1 {
+  /* 中央の50px上 */
+  top: calc(50% - 50px);
+  transform: translateY(-50%);
+}
 
-  .block-bottom {
-    top: calc(50% + 65px);
-    /* 中央線の下側に65px空ける */
-    transform: none;
-  }
+.inside-rival-3,
+.inside-myself-3 {
+  /* 中央の50px下 */
+  top: calc(50% + 50px);
+  transform: translateY(-50%);
+}
 
-  /* deck/playmat を左側に、tower を右側に35px間隔で横並び配置 */
-  /* deckコンテナ：山札としての厚みを演出 */
-  .deck-container {
-    position: absolute;
-    width: 630px;
-    height: 70px;
-    left: calc(50% - 472.5px);
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    overflow: visible;
-    transform-style: preserve-3d;
-    transform: rotateX(15deg) rotateY(0deg) rotateZ(0deg);
-    perspective: 1000px;
-  }
+/* moon コンテナの詳細 */
+.moon-container {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border-radius: 50%;
+  box-shadow: -8px 8px 0 0 rgba(255, 255, 255, 0.8), 0 0 15px rgba(0, 242, 255, 0.3);
+  transform-style: preserve-3d;
+  transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+  perspective: 1000px;
+}
 
-  .deck-top {
-    top: calc(50% - 140px);
-    left: calc(50% - 472.5px + 315px);
-  }
+.block-top {
+  top: calc(50% - 65px - 225px);
+  /* 中央線の上側に65px空ける */
+  transform: none;
+}
 
-  .deck-bottom {
-    top: calc(50% + 70px);
-    transform: none;
-  }
+.block-bottom {
+  top: calc(50% + 65px);
+  /* 中央線の下側に65px空ける */
+  transform: none;
+}
 
-  .playmat-container {
-    position: absolute;
-    width: 630px;
-    height: 140px;
-    left: calc(50% - 472.5px);
-  }
+/* deck/playmat を左側に、tower を右側に35px間隔で横並び配置 */
+/* deckコンテナ：山札としての厚みを演出 */
+.deck-container {
+  position: absolute;
+  width: 630px;
+  height: 70px;
+  left: calc(50% - 472.5px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  overflow: visible;
+  transform-style: preserve-3d;
+  transform: rotateX(15deg) rotateY(0deg) rotateZ(0deg);
+  perspective: 1000px;
+}
 
-  .playmat-top {
-    top: calc(50% - 150px - 140px);
-    transform: none;
-    left: calc(50% - 472.5px + 315px);
-  }
+.deck-top {
+  top: calc(50% - 140px);
+  left: calc(50% - 472.5px + 315px);
+}
 
-  .playmat-bottom {
-    top: calc(50% + 150px);
-    transform: none;
-  }
+.deck-bottom {
+  top: calc(50% + 70px);
+  transform: none;
+}
 
-  /* kyoukokuA 内に置く単一の駒 */
-  .piece-kyoukoku {
-    top: 0;
-    left: calc(50% - 17.5px);
-    /* 横幅35pxの駒を中央に配置 */
-  }
+.playmat-container {
+  position: absolute;
+  width: 630px;
+  height: 140px;
+  left: calc(50% - 472.5px);
+}
 
-  #pieces-container {
-    position: relative;
-    width: 840px;
-    /* 24 pieces × 35px */
-    height: 270px;
-    /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
-  }
+.playmat-top {
+  top: calc(50% - 150px - 140px);
+  transform: none;
+  left: calc(50% - 472.5px + 315px);
+}
 
-  #page-title {
-    display: none;
-  }
+.playmat-bottom {
+  top: calc(50% + 150px);
+  transform: none;
+}
 
-  #raigo-phase-panel-top {
-    position: absolute;
-    left: 12px;
-    top: calc(50% - 15px - 90px);
-    z-index: 10;
 
-    width: 90px;
-    height: 90px;
-    box-sizing: border-box;
-    padding: 8px;
 
-    background: rgba(128, 128, 128, 0.4);
-    color: #2c1a0a;
-    border: 2px solid rgba(128, 128, 128, 0.4);
-    border-radius: 6px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+/* kyoukokuA 内に置く単一の駒 */
+.piece-kyoukoku {
+  top: 0;
+  left: calc(50% - 17.5px);
+  /* 横幅35pxの駒を中央に配置 */
+}
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+#pieces-container {
+  position: relative;
+  width: 840px;
+  /* 24 pieces × 35px */
+  height: 270px;
+  /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
+}
 
-    cursor: default;
-    user-select: none;
-  }
+#page-title {
+  display: none;
+}
 
-  #raigo-phase-panel-bottom {
-    position: absolute;
-    left: 12px;
-    top: calc(50% + 15px);
-    z-index: 10;
+#raigo-phase-panel-top {
+  position: absolute;
+  left: 12px;
+  top: calc(50% - 15px - 90px);
+  z-index: 10;
 
-    width: 90px;
-    height: 90px;
-    box-sizing: border-box;
-    padding: 8px;
+  width: 90px;
+  height: 90px;
+  box-sizing: border-box;
+  padding: 8px;
 
-    background: linear-gradient(145deg, #ffb347, #ff8c00);
-    color: #2c1a0a;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  background: rgba(128, 128, 128, 0.4);
+  color: #2c1a0a;
+  border: 2px solid rgba(128, 128, 128, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    cursor: pointer;
-    user-select: none;
-  }
+  cursor: default;
+  user-select: none;
+}
 
-  /* フェーズパネル（隠駒）のデザイン：実物の駒と同じスタイル */
-  #raigo-phase-panel {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 10;
-    width: 120px;
-    height: 120px;
-    box-sizing: border-box;
+#raigo-phase-panel-bottom {
+  position: absolute;
+  left: 12px;
+  top: calc(50% + 15px);
+  z-index: 10;
 
-    background: linear-gradient(135deg, #d3b17d 0%, #b89150 100%);
-    border: 2px solid #8e6d3b;
-    border-radius: 8px;
-    color: #2c1b05;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
-    text-shadow: 0.5px 0.5px 0px rgba(255, 255, 255, 0.5);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: 90px;
+  height: 90px;
+  box-sizing: border-box;
+  padding: 8px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  background: linear-gradient(145deg, #ffb347, #ff8c00);
+  color: #2c1a0a;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 
-    cursor: pointer;
-    user-select: none;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  #raigo-phase-panel.panel-pos-myself {
-    top: calc(50% + 20px);
-    /* 中央線から20px下に配置 */
-  }
+  cursor: pointer;
+  user-select: none;
+}
 
-  #raigo-phase-panel.panel-pos-rival {
-    top: calc(50% - 120px - 20px);
-    /* 中央線から20px上に配置 */
-  }
+/* フェーズパネル（隠駒）のデザイン：実物の駒と同じスタイル */
+#raigo-phase-panel {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  width: 120px;
+  height: 120px;
+  box-sizing: border-box;
 
-  #raigo-phase-panel.panel-inactive {
-    background: rgba(128, 128, 128, 0.4);
-    cursor: default;
-    border-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  }
+  background: linear-gradient(135deg, #d3b17d 0%, #b89150 100%);
+  border: 2px solid #8e6d3b;
+  border-radius: 8px;
+  color: #2c1b05;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0.5px 0.5px 0px rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  #raigo-phase-title {
-    display: none;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  #raigo-phase-name {
-    margin: 0;
-    font-size: 80px;
-    font-weight: 700;
-    font-family: "HGS行書体", "行書体", serif;
-    line-height: 1.2;
-  }
+  cursor: pointer;
+  user-select: none;
+}
 
-  .phase-tsumuHatsu {
-    position: relative;
-    width: 90px;
-    height: 90px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transform: scale(0.9);
-  }
+#raigo-phase-panel.panel-pos-myself {
+  top: calc(50% + 20px);
+  /* 中央線から20px下に配置 */
+}
 
-  .phase-tsumuHatsu::before {
-    content: "";
-    position: absolute;
-    width: 120%;
-    height: 3px;
-    background: #2c1b05;
-    transform: rotate(-45deg);
-    top: 50%;
-    left: -10%;
-  }
+#raigo-phase-panel.panel-pos-rival {
+  top: calc(50% - 120px - 20px);
+  /* 中央線から20px上に配置 */
+}
 
-  .phase-tsumuHatsu-left {
-    font-size: 48px;
-    display: block;
-  }
+#raigo-phase-panel.panel-inactive {
+  background: rgba(128, 128, 128, 0.4);
+  cursor: default;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
 
-  .phase-tsumuHatsu-right {
-    font-size: 48px;
-    display: block;
-    align-self: flex-end;
-    position: relative;
-    left: -2px;
-    top: -6px;
-  }
+#raigo-phase-title {
+  display: none;
+}
 
-  #raigo-phase-sub {
-    display: none;
-  }
+#raigo-phase-name {
+  margin: 0;
+  font-size: 80px;
+  font-weight: 700;
+  font-family: "HGS行書体", "行書体", serif;
+  line-height: 1.2;
+}
 
-  #raigo-next-phase {
-    display: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.92);
-    color: #111;
-    font-weight: 700;
-  }
+.phase-tsumuHatsu {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: scale(0.9);
+}
 
-  #raigo-next-phase.is-disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-  }
+.phase-tsumuHatsu::before {
+  content: "";
+  position: absolute;
+  width: 120%;
+  height: 3px;
+  background: #2c1b05;
+  transform: rotate(-45deg);
+  top: 50%;
+  left: -10%;
+}
 
-  .piece {
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2c1a0a;
-    font-weight: 700;
-    font-size: 30px;
-    font-family: "HGS行書体", "行書体", serif;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    box-sizing: border-box;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-    /* ぼやけ対策: 影を弱くし、レンダリングを最適化 */
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    user-select: none;
-  }
+.phase-tsumuHatsu-left {
+  font-size: 48px;
+  display: block;
+}
 
-  .piece-front {
-    background: linear-gradient(145deg, #ffb347, #ff8c00) !important;
-    color: #2c1a0a !important;
-    position: relative;
-  }
+.phase-tsumuHatsu-right {
+  font-size: 48px;
+  display: block;
+  align-self: flex-end;
+  position: relative;
+  left: -2px;
+  top: -6px;
+}
 
-  /*.piece-front::before {
+#raigo-phase-sub {
+  display: none;
+}
+
+#raigo-next-phase {
+  display: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  font-weight: 700;
+}
+
+#raigo-next-phase.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.piece {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c1a0a;
+  font-weight: 700;
+  font-size: 30px;
+  font-family: "HGS行書体", "行書体", serif;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-sizing: border-box;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+  /* ぼやけ対策: 影を弱くし、レンダリングを最適化 */
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  user-select: none;
+}
+
+.piece-front {
+  background: linear-gradient(145deg, #ffb347, #ff8c00) !important;
+  color: #2c1a0a !important;
+  position: relative;
+}
+
+/*.piece-front::before {
   position: absolute;
   top: 1px;
   left: 1px;
@@ -711,130 +716,130 @@
 .piece-front[data-weight="9"]::before { content: "◤ ◤\A◤ ◤\A◤ ◤\A◤ ◤\A◤"; }
 */
 
-  .piece-back {
-    background: linear-gradient(145deg, #ff9f33, #f07500) !important;
-    color: #2c1a0a !important;
-  }
+.piece-back {
+  background: linear-gradient(145deg, #ff9f33, #f07500) !important;
+  color: #2c1a0a !important;
+}
 
-  .piece-rotated {
-    transform: rotate(180deg);
-  }
+.piece-rotated {
+  transform: rotate(180deg);
+}
 
-  .piece-text-flipped {
-    display: inline-block;
-    transform: scaleY(-1);
-  }
+.piece-text-flipped {
+  display: inline-block;
+  transform: scaleY(-1);
+}
 
-  .kamon {
-    /* 古い実装は削除 */
-    display: none;
-  }
+.kamon {
+  /* 古い実装は削除 */
+  display: none;
+}
 
-  .new-piece {
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    background-image: url('img/koma/雷.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
-  }
+.new-piece {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  background-image: url('img/koma/雷.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+}
 
-  /* Gray containers for layout */
-  .gray-container {
-    background-color: rgba(128, 128, 128, 0.3);
-    border-radius: 8px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-    margin-bottom: 15px;
-  }
+/* Gray containers for layout */
+.gray-container {
+  background-color: rgba(128, 128, 128, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+  margin-bottom: 15px;
+}
 
-  .playmat-area {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
+.playmat-area {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
 
-  .playmat-area-bottom {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 15px;
-  }
+.playmat-area-bottom {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 15px;
+}
 
-  .side-container {
-    width: 300px;
-    height: 250px;
-    margin-left: 70px;
-    background-color: rgba(128, 128, 128, 0.3);
-    /* Gray background */
-    border-radius: 8px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-  }
+.side-container {
+  width: 300px;
+  height: 250px;
+  margin-left: 70px;
+  background-color: rgba(128, 128, 128, 0.3);
+  /* Gray background */
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.5);
+}
 
-  .koma-grid {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    margin-left: 70px;
-  }
+.koma-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-left: 70px;
+}
 
-  .koma-row {
-    display: flex;
-    gap: 0;
-  }
+.koma-row {
+  display: flex;
+  gap: 0;
+}
 
-  #playmat {
-    width: 210px;
-    height: 140px;
-    background-image: url('img/raijinplaymat/playmat12.jpg');
-    background-size: cover;
-    transform: rotate(180deg);
-  }
+#playmat {
+  width: 210px;
+  height: 140px;
+  background-image: url('img/raijinplaymat/playmat12.jpg');
+  background-size: cover;
+  transform: rotate(180deg);
+}
 
-  .yagura-playmat {
-    width: 105px;
-    height: 105px;
-    background-image: url('img/playmat/yagura.png');
-    background-size: cover;
-  }
+.yagura-playmat {
+  width: 105px;
+  height: 105px;
+  background-image: url('img/playmat/yagura.png');
+  background-size: cover;
+}
 
-  .yagura-playmat.rotated {
-    transform: rotate(180deg);
-  }
+.yagura-playmat.rotated {
+  transform: rotate(180deg);
+}
 
-  #playmat2 {
-    width: 210px;
-    height: 140px;
-    background-image: url('img/raijinplaymat/playmat12.jpg');
-    background-size: cover;
-  }
+#playmat2 {
+  width: 210px;
+  height: 140px;
+  background-image: url('img/raijinplaymat/playmat12.jpg');
+  background-size: cover;
+}
 
-  /* genMoveフェーズで使用可能なhandの黄緑ハイライト */
-  .available-hand {
-    background-color: rgba(144, 238, 144, 0.8) !important;
-    border: 2px solid rgba(50, 200, 100, 0.9) !important;
-    box-shadow: 0 0 10px rgba(144, 238, 144, 0.6);
-    cursor: pointer;
-  }
+/* genMoveフェーズで使用可能なhandの黄緑ハイライト */
+.available-hand {
+  background-color: rgba(144, 238, 144, 0.8) !important;
+  border: 2px solid rgba(50, 200, 100, 0.9) !important;
+  box-shadow: 0 0 10px rgba(144, 238, 144, 0.6);
+  cursor: pointer;
+}
 
-  /* Inline piece for flex layout areas (not absolutely positioned) */
-  .piece-inline {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(145deg, #c7c2b5, #9c9484);
-    color: #2c1a0a;
-    font-weight: 700;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
-  }
+/* Inline piece for flex layout areas (not absolutely positioned) */
+.piece-inline {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #c7c2b5, #9c9484);
+  color: #2c1a0a;
+  font-weight: 700;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+}
 
-  /* デバッグモード：駒選択状態 */
-  .debug-selected {
-    border: 3px solid rgba(255, 255, 0, 0.9) !important;
-    box-shadow: 0 0 15px rgba(255, 255, 0, 0.7) !important;
-  }
+/* デバッグモード：駒選択状態 */
+.debug-selected {
+  border: 3px solid rgba(255, 255, 0, 0.9) !important;
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.7) !important;
+}
 
-  /* デバッグモード：駒の表裏表示 */
+/* デバッグモード：駒の表裏表示 */
