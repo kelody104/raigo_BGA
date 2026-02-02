@@ -297,8 +297,8 @@
 }
 
 .hand-rival-1 {
-  /* +100px shift (Inside右側のスペース確保のため) */
-  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px);
+  /* +100px shift (Inside右側のスペース確保のため) - 105px (3駒分右へ) */
+  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px - 105px);
 }
 
 /* playmat_myself 側の hand 配置 */
@@ -307,8 +307,8 @@
 }
 
 .hand-myself-1 {
-  /* -100px shift (Inside右側のスペース確保のため) */
-  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px);
+  /* -100px shift (Inside右側のスペース確保のため) + 105px (3駒分右へ) */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px + 105px);
 }
 
 /* inside コンテナ共通（35×35） */
@@ -323,28 +323,28 @@
 
 /* playmat_rival 側の inside, moon 配置 */
 .inside-rival {
-  /* +100px shift */
-  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px);
+  /* +100px shift - 105px (3駒分右へ) */
+  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px - 105px);
 }
 
 .moon-rival {
-  /* +100px shift */
+  /* +100px shift - 105px (3駒分右へ) */
   /* hand_rival_1と同じ水平位置、ラインから40px下 */
-  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px);
+  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px - 105px);
   top: calc(50% + 50px);
   transform: translateY(-50%) rotate(-45deg);
 }
 
 /* playmat_myself 側の inside, moon 配置 */
 .inside-myself {
-  /* -100px shift */
-  left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px);
+  /* -100px shift + 105px (3駒分右へ) */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px + 105px);
 }
 
 .moon-myself {
-  /* -100px shift */
+  /* -100px shift + 105px (3駒分右へ) */
   /* hand_myself_1と同じ水平位置、ラインから40px上 */
-  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px);
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px + 105px);
   top: calc(50% - 50px);
   transform: translateY(-50%) rotate(135deg);
 }
