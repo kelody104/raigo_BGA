@@ -329,9 +329,9 @@
 
 .moon-rival {
   /* +100px shift - 105px (3駒分右へ) */
-  /* hand_rival_1と同じ水平位置、ラインから40px下 */
+  /* hand_rival_1と同じ水平位置、ラインから40px下 + 35px (1駒分下へ) */
   left: calc(231px + 100.5px + 85px + 35px + 140px + 100px - 105px);
-  top: calc(50% + 50px);
+  top: calc(50% + 85px);
   transform: translateY(-50%) rotate(-45deg);
 }
 
@@ -343,9 +343,9 @@
 
 .moon-myself {
   /* -100px shift + 105px (3駒分右へ) */
-  /* hand_myself_1と同じ水平位置、ラインから40px上 */
+  /* hand_myself_1と同じ水平位置、ラインから40px上 + 35px (1駒分下へ) */
   left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px + 105px);
-  top: calc(50% - 50px);
+  top: calc(50% - 15px);
   transform: translateY(-50%) rotate(135deg);
 }
 
