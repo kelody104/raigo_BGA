@@ -75,8 +75,10 @@
       <div id="moon_rival" class="moon-container moon-rival"></div>
       <div id="hand_rival_1" class="hand-container hand-rival hand-rival-1"></div>
       <div id="inside_rival_3" class="inside-container inside-rival inside-rival-3"></div>
+      <div id="cloud_rival" class="cloud-container cloud-rival"></div>
       <div id="inside_rival_2" class="inside-container inside-rival inside-rival-2"></div>
       <div id="inside_rival_1" class="inside-container inside-rival inside-rival-1"></div>
+      <div id="head_rival" class="head-container head-rival"></div>
       <div id="hand_rival_2" class="hand-container hand-rival hand-rival-2"></div>
       <div id="oumon_rival_1" class="oumon-container oumon-rival oumon-rival-1">
         <div id="oumoncircle_rival_1" class="oumon-inner"></div>
@@ -92,8 +94,10 @@
       <div id="moon_myself" class="moon-container moon-myself"></div>
       <div id="hand_myself_1" class="hand-container hand-myself hand-myself-1"></div>
       <div id="inside_myself_1" class="inside-container inside-myself inside-myself-1"></div>
+      <div id="head_myself" class="head-container head-myself"></div>
       <div id="inside_myself_2" class="inside-container inside-myself inside-myself-2"></div>
       <div id="inside_myself_3" class="inside-container inside-myself inside-myself-3"></div>
+      <div id="cloud_myself" class="cloud-container cloud-myself"></div>
       <div id="hand_myself_2" class="hand-container hand-myself hand-myself-2"></div>
       <div id="oumon_myself_1" class="oumon-container oumon-myself oumon-myself-1">
         <div id="oumoncircle_myself_1" class="oumon-inner"></div>
