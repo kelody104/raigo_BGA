@@ -330,7 +330,11 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
           dojo.query(".selected-piece").removeClass("selected-piece");
           dojo.query(".selectable-tower").removeClass("selectable-tower");
           dojo.query(".selectable-kyoukoku").removeClass("selectable-kyoukoku");
-        });
+
+          this.showMessage(_("Action completed. Press 'Next Phase' to continue."), "info");
+          dojo.addClass("btn_next_phase", "blinking");
+        }
+      );
     },
 
     onKyoukokuClick: function (kyoukokuId) {
@@ -348,6 +352,9 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
           dojo.query(".selected-piece").removeClass("selected-piece");
           dojo.query(".selectable-tower").removeClass("selectable-tower");
           dojo.query(".selectable-kyoukoku").removeClass("selectable-kyoukoku");
+
+          this.showMessage(_("Action completed. Press 'Next Phase' to continue."), "info");
+          dojo.addClass("btn_next_phase", "blinking");
         }
       );
     },
@@ -388,6 +395,9 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         this,
         function (result) {
           dojo.query(".selectable-tower").removeClass("selectable-tower");
+
+          this.showMessage(_("Marker moved. Press 'Next Phase' to end your turn."), "info");
+          dojo.addClass("btn_next_phase", "blinking");
         }
       );
     },

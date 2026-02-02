@@ -482,6 +482,67 @@ class Raigo extends Table
         $this->notifyPlayer($playerId, "deckSelected", "", array("deckId" => $deckId));
     }
 
+    public function actTsumu($pieceId, $towerId)
+    {
+        self::checkAction("actTsumu");
+
+        $playerId = self::getActivePlayerId();
+        
+        // 1. 駒情報の取得と所有権チェック
+        $piece = self::getObjectFromDB("SELECT * FROM piece WHERE piece_id = $pieceId");
+        if (!$piece) {
+            throw new BgaUserException("Piece not found");
+        }
+        
+        // 自分の hand にある駒のみ操作可能
+        if (strpos($piece['piece_container'], "hand_p" . $playerId) === false) {
+             throw new BgaUserException("You can only stack pieces from your hand");
+        }
+
+        // 2. 移動処理
+        $sql = "SELECT MAX(piece_position) FROM piece WHERE piece_container = '$towerId'";
+        $maxPos = self::getUniqueValueFromDB($sql);
+        $newPos = ($maxPos === null) ? 0 : $maxPos + 1;
+
+        self::DbQuery("UPDATE piece SET piece_container = '$towerId', piece_position = $newPos WHERE piece_id = $pieceId");
+
+        // 通知
+        $this->notifyAllPlayers("pieceMoved", clienttranslate('${player_name} stacks a piece on ${tower_name}'), array(
+            'player_name' => self::getActivePlayerName(),
+            'fromContainer' => $piece['piece_container'],
+            'toContainer' => $towerId,
+            'pieceId' => $pieceId,
+            'tower_name' => $towerId
+        ));
+
+        // 3. 役判定
+        $towerPieces = self::getObjectListFromDB("SELECT * FROM piece WHERE piece_container = '$towerId' ORDER BY piece_position DESC");
+        
+        $yaku = $this->calculateHand($towerPieces);
+        
+        if ($yaku) {
+            $score = $yaku['score'];
+            $yakuName = $yaku['name'];
+            
+            self::DbQuery("UPDATE player SET player_score = player_score + $score WHERE player_id = $playerId");
+            $newScore = self::getUniqueValueFromDB("SELECT player_score FROM player WHERE player_id = $playerId");
+
+            $this->notifyAllPlayers("yakuCompleted", clienttranslate('${player_name} completes Yaku: ${yaku_name} (${score} points)'), array(
+                'player_name' => self::getActivePlayerName(),
+                'yaku_name' => $yakuName,
+                'score' => $score,
+                'new_score' => $newScore,
+                'towerId' => $towerId
+            ));
+
+            self::DbQuery("UPDATE piece SET piece_container = 'exclusion', piece_position = 0 WHERE piece_container = '$towerId'");
+            $this->notifyAllPlayers("towerCleared", "", array('towerId' => $towerId));
+        }
+
+        // フェーズ終了
+        // $this->gamestate->nextState("next"); // 手動遷移に変更
+    }
+
     public function actHatsu($pieceId, $kyoukokuId)
     {
         self::checkAction("actHatsu");
@@ -523,7 +584,7 @@ class Raigo extends Table
         $this->resolvePieceEffect($playerId, $typeId);
 
         // フェーズ終了
-        $this->gamestate->nextState("next");
+        // $this->gamestate->nextState("next"); // 手動遷移に変更
     }
 
     private function resolvePieceEffect($playerId, $typeId)
@@ -574,7 +635,7 @@ class Raigo extends Table
         ));
 
         // フェーズ終了
-        $this->gamestate->nextState("next");
+        // $this->gamestate->nextState("next"); // 手動遷移に変更
     }
 
     public function movePieceFromDeck($fromContainer, $toContainer)
