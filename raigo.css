@@ -361,8 +361,8 @@
 /* playmat_rival 側の head/cloud: Insideの左(visually right)に配置 */
 .head-rival,
 .cloud-rival {
-  /* Inside-left - 10px - 140px - 122.5px (3.5駒分右へ) */
-  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px - 10px - 140px - 122.5px);
+  /* Hand2 (下の配置でいう一番端の列) と同じ水平位置に配置 */
+  left: calc(231px + 100.5px + 85px);
 }
 
 .head-rival {
