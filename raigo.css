@@ -331,7 +331,7 @@
   /* X: hand_rival_1 (105px shift), Y: inside_rival_1 (-50px) と同じ位置 */
   left: calc(231px + 100.5px + 85px + 35px + 140px + 100px - 105px);
   top: calc(50% - 50px);
-  transform: translateY(-50%) rotate(-45deg);
+  transform: translateY(-50%);
 }
 
 /* playmat_myself 側の inside, moon 配置 */
@@ -344,7 +344,7 @@
   /* X: hand_myself_1 (105px shift), Y: inside_myself_1 (-50px) と同じ位置 */
   left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px + 105px);
   top: calc(50% - 50px);
-  transform: translateY(-50%) rotate(135deg);
+  transform: translateY(-50%);
 }
 
 /* head/cloud コンテナ（4駒分: 140px × 35px） */
@@ -414,17 +414,15 @@
   transform: translateY(-50%);
 }
 
-/* moon コンテナの詳細 */
+/* moon コンテナの詳細（シンプルスタイルに変更） */
 .moon-container {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border-radius: 50%;
-  box-shadow: -8px 8px 0 0 rgba(255, 255, 255, 0.8), 0 0 15px rgba(0, 242, 255, 0.3);
-  transform-style: preserve-3d;
-  transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
-  perspective: 1000px;
+  width: 35px;
+  height: 35px;
+  background-color: rgba(128, 128, 128, 0.45);
+  border: 1px solid rgba(128, 128, 128, 0.6);
+  border-radius: 4px;
+  /* shadow, transform 削除 */
 }
 
 .block-top {
