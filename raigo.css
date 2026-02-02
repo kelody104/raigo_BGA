@@ -363,8 +363,8 @@
 /* playmat_rival 側の head/cloud: Insideの左(visually right)に配置 */
 .head-rival,
 .cloud-rival {
-  /* Inside-left - 10px - 140px - 140px (4駒分右へ) */
-  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px - 10px - 140px - 140px);
+  /* Inside-left - 10px - 140px - 122.5px (3.5駒分右へ) */
+  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px + 100px - 10px - 140px - 122.5px);
 }
 
 .head-rival {
@@ -380,8 +380,8 @@
 /* playmat_myself 側の head/cloud: Insideの右(visually right)に配置 */
 .head-myself,
 .cloud-myself {
-  /* Inside-left + 35px + 10px + 140px (4駒分右へ) */
-  left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px + 35px + 10px + 140px);
+  /* Inside-left + 35px + 10px + 122.5px (3.5駒分右へ) */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px - 100px + 35px + 10px + 122.5px);
 }
 
 .head-myself {
