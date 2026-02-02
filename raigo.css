@@ -409,9 +409,9 @@
 /* deckコンテナ：山札としての厚みを演出 */
 .deck-container {
   position: absolute;
-  width: 560px;
+  width: 630px;
   height: 70px;
-  left: calc(50% - 402.5px);
+  left: calc(50% - 472.5px);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -423,7 +423,7 @@
 
 .deck-top {
   top: calc(50% - 140px);
-  left: calc(50% - 402.5px + 280px);
+  left: calc(50% - 472.5px + 315px);
 }
 
 .deck-bottom {
@@ -433,15 +433,15 @@
 
 .playmat-container {
   position: absolute;
-  width: 560px;
+  width: 630px;
   height: 140px;
-  left: calc(50% - 402.5px);
+  left: calc(50% - 472.5px);
 }
 
 .playmat-top {
   top: calc(50% - 150px - 140px);
   transform: none;
-  left: calc(50% - 402.5px + 280px);
+  left: calc(50% - 472.5px + 315px);
 }
 
 .playmat-bottom {
