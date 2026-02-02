@@ -176,37 +176,37 @@
 
 /* tower_myself列の位置指定 */
 #tower_myself_1 {
-  left: calc(50% + 192.5px);
-  top: calc(50% + 65px);
-}
-
-#tower_myself_2 {
   left: calc(50% + 192.5px + 35px);
   top: calc(50% + 65px);
 }
 
+#tower_myself_2 {
+  left: calc(50% + 192.5px + 35px + 35px);
+  top: calc(50% + 65px);
+}
+
 #tower_myself_3 {
-  left: calc(50% + 192.5px + 70px);
+  left: calc(50% + 192.5px + 70px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_4 {
-  left: calc(50% + 192.5px + 105px);
+  left: calc(50% + 192.5px + 105px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_5 {
-  left: calc(50% + 192.5px + 140px);
+  left: calc(50% + 192.5px + 140px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_6 {
-  left: calc(50% + 192.5px + 175px);
+  left: calc(50% + 192.5px + 175px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_7 {
-  left: calc(50% + 192.5px + 210px);
+  left: calc(50% + 192.5px + 210px + 35px);
   top: calc(50% + 65px);
 }
 
@@ -436,6 +436,8 @@
   top: calc(50% + 65px);
   /* 中央線の下側に65px空ける */
   transform: none;
+  /* 右へ35pxシフト */
+  left: calc(50% + 192.5px + 35px);
 }
 
 /* deck/playmat を左側に、tower を右側に35px間隔で横並び配置 */
@@ -462,6 +464,8 @@
 .deck-bottom {
   top: calc(50% + 70px);
   transform: none;
+  /* 右へ35pxシフト */
+  left: calc(50% - 472.5px + 35px);
 }
 
 .playmat-container {
@@ -480,6 +484,8 @@
 .playmat-bottom {
   top: calc(50% + 150px);
   transform: none;
+  /* 右へ35pxシフト */
+  left: calc(50% - 472.5px + 35px);
 }
 
 
