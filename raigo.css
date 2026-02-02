@@ -102,13 +102,13 @@
   right: 10px;
 }
 
-/* 中央線から15px空けた上下のコンテナ（横840×縦35） */
+/* 中央線から15px空けた上下のコンテナ（横875×縦35） */
 .row-container {
   position: absolute;
-  width: 840px;
+  width: 875px;
   height: 35px;
-  /* 右へ35pxシフト */
-  left: calc(50% + 35px);
+  /* 左へ35px拡張: 中心位置を +35px から +17.5px へ調整 */
+  left: calc(50% + 17.5px);
   transform: translateX(-50%);
 }
 
