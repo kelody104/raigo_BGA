@@ -328,10 +328,9 @@
 }
 
 .moon-rival {
-  /* +100px shift (水平位置は元に戻す) */
-  /* hand_rival_1と同じ水平位置、ラインから40px下 + 35px (1駒分下へ) */
-  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px);
-  top: calc(50% + 85px);
+  /* X: hand_rival_1 (105px shift), Y: inside_rival_1 (-50px) と同じ位置 */
+  left: calc(231px + 100.5px + 85px + 35px + 140px + 100px - 105px);
+  top: calc(50% - 50px);
   transform: translateY(-50%) rotate(-45deg);
 }
 
@@ -342,10 +341,9 @@
 }
 
 .moon-myself {
-  /* -100px shift (水平位置は元に戻す) */
-  /* hand_myself_1と同じ水平位置、ラインから40px上 + 35px (1駒分下へ) */
-  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px);
-  top: calc(50% - 15px);
+  /* X: hand_myself_1 (105px shift), Y: inside_myself_1 (-50px) と同じ位置 */
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px - 100px + 105px);
+  top: calc(50% - 50px);
   transform: translateY(-50%) rotate(135deg);
 }
 
