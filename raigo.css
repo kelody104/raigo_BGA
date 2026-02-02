@@ -344,7 +344,6 @@
     transform: translateY(-50%);
   }
 
-
   /* playmat_myself 側の配置変更: Space確保のためInside以左を -100px シフト */
   .hand-myself-1 {
     /* -100px shift */
