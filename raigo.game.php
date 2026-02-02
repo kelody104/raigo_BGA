@@ -105,8 +105,6 @@ class Raigo extends Table
             $count = ($player_id == $firstPlayerId) ? 1 : 2;
             
             // deck から $count 枚取得して hand_p{player_id} へ移動
-            // piece_container='deck' の駒を position 順（上から）またはランダムに取得
-            // ここでは既にシャッフル済みなので position 若い順に取得
             $sql = "SELECT piece_id FROM piece WHERE piece_container = 'deck' ORDER BY piece_position ASC LIMIT $count";
             $cardsToDraw = self::getObjectListFromDB($sql);
             
@@ -115,10 +113,19 @@ class Raigo extends Table
                 $handContainer = 'hand_p' . $player_id;
                 self::DbQuery("UPDATE piece SET piece_container = '$handContainer', piece_position = 0 WHERE piece_id = $pIdDb");
             }
+
+            // [DEV] Inside1, Inside2への駒配置（開発用）
+            // さらに2枚引いて inside_p{player_id} の position 0, 1 に配置
+            $sqlInside = "SELECT piece_id FROM piece WHERE piece_container = 'deck' ORDER BY piece_position ASC LIMIT 2";
+            $insideCards = self::getObjectListFromDB($sqlInside);
             
-            // deck の position を詰める処理が必要だが、BGA標準Deckクラスを使っていないため
-            // 手動でやるか、あるいは position が飛び飛びでも問題ない設計にするか。
-            // ここでは一旦そのままにする（取得時に ORDER BY piece_position すれば順不同でも上から取れるため）
+            $pos = 0;
+            foreach ($insideCards as $ic) {
+                $pIdDb = $ic['piece_id'];
+                $insideContainer = 'inside_p' . $player_id;
+                self::DbQuery("UPDATE piece SET piece_container = '$insideContainer', piece_position = $pos WHERE piece_id = $pIdDb");
+                $pos++;
+            }
         }
 
         // --- 初期スコア設定 (2点) ---
