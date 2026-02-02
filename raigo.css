@@ -291,22 +291,22 @@
 
 /* playmat_rival 側の hand_rival_1, hand_rival_2 配置 */
 .hand-rival-2 {
-  /* oumon_rival_1 の右に 15px 空き */
-  left: calc(231px + 100.5px + 15px);
+  /* oumon_rival_1 の右に 15px + 70px = 85px 空き */
+  left: calc(231px + 100.5px + 85px);
 }
 
 .hand-rival-1 {
   /* hand_rival_2 の右に 140px 空き */
-  left: calc(231px + 100.5px + 15px + 35px + 140px);
+  left: calc(231px + 100.5px + 85px + 35px + 140px);
 }
 
 /* playmat_myself 側の hand_myself_1, hand_myself_2 配置 */
 .hand-myself-2 {
-  left: calc(100% - 100.5px - 231px - 15px - 35px);
+  left: calc(100% - 100.5px - 231px - 85px - 35px);
 }
 
 .hand-myself-1 {
-  left: calc(100% - 100.5px - 231px - 15px - 35px - 140px - 35px);
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px);
 }
 
 /* inside コンテナ（35×35、handA1とhandA2の間、handB1とhandB2の間） */
@@ -322,7 +322,7 @@
 /* playmat_rival 側の inside_rival_1,2,3 配置（上下逆） */
 .inside-rival {
   /* hand_rival_1とhand_rival_2の中間 */
-  left: calc(231px + 100.5px + 15px + 35px + 70px + 17.5px - 35px);
+  left: calc(231px + 100.5px + 85px + 35px + 70px + 17.5px - 35px);
 }
 
 .inside-rival-2 {
@@ -344,7 +344,7 @@
 
 /* playmat_myself 側の inside_myself_1,2,3 配置 */
 .inside-myself {
-  left: calc(100% - 100.5px - 231px - 15px - 35px - 70px - 17.5px);
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 70px - 17.5px);
 }
 
 .inside-myself-2 {
@@ -379,14 +379,14 @@
 
 .moon-rival {
   /* hand_rival_1と同じ水平位置、ラインから40px下 */
-  left: calc(231px + 100.5px + 15px + 35px + 140px);
+  left: calc(231px + 100.5px + 85px + 35px + 140px);
   top: calc(50% + 50px);
   transform: translateY(-50%) rotate(-45deg);
 }
 
 .moon-myself {
   /* hand_myself_1と同じ水平位置、ラインから40px上 */
-  left: calc(100% - 100.5px - 231px - 15px - 35px - 140px - 35px);
+  left: calc(100% - 100.5px - 231px - 85px - 35px - 140px - 35px);
   top: calc(50% - 50px);
   transform: translateY(-50%) rotate(135deg);
 }
