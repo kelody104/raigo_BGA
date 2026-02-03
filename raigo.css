@@ -104,15 +104,15 @@
 
 /* 中央線から15px空けた上下のコンテナ（横875×縦35） */
 /* 中央線（グラデーションライン）コンテナ
-   - 座標: 幅980px, 左位置265px相当 (CSS: calc(50% + 140px))
-   - 右方向にシフトして配置
+   - 座標: 幅980px, 左位置125px相当 (CSS: 50%)
+   - 中央配置 (左右対称)
 */
 .row-container {
   position: absolute;
   width: 980px;
   height: 35px;
-  /* 右へさらに70px拡張: 幅980px, 中心位置をさらに右へ (+70px shift) */
-  left: calc(50% + 140px);
+  /* 中央配置 */
+  left: 50%;
   transform: translateX(-50%);
 }
 

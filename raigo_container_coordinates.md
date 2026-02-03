@@ -19,10 +19,10 @@
 *   **Selector**: `.row-container`
 *   **Width**: `980px`
 *   **Height**: `35px`
-*   **CSS Left**: `calc(50% + 140px)` (transform: translateX(-50%))
-    *   中心位置がボード中央から右に `140px` ずれています。
-*   **実効 Left**: `265px`
-*   **実効 Right**: `1245px` (ボード右端を 15px 超過)
+*   **CSS Left**: `50%` (transform: translateX(-50%))
+    *   中心位置: ボード中央 (左右対称)
+*   **実効 Left**: `125px`
+*   **実効 Right**: `1105px`
 
 ### デッキ (Deck) / プレイマット (Playmat)
 山札や手札を置くエリア。
