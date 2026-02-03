@@ -105,10 +105,10 @@
 /* 中央線から15px空けた上下のコンテナ（横875×縦35） */
 .row-container {
   position: absolute;
-  width: 910px;
+  width: 980px;
   height: 35px;
-  /* 右へ35px拡張: 幅910px, 中心位置をさらに右へ */
-  left: calc(50% + 35px);
+  /* 右へさらに70px拡張: 幅980px, 中心位置をさらに右へ */
+  left: calc(50% + 70px);
   transform: translateX(-50%);
 }
 
@@ -500,8 +500,8 @@
 
 #pieces-container {
   position: relative;
-  width: 875px;
-  /* 25 pieces × 35px */
+  width: 945px;
+  /* 27 pieces × 35px */
   height: 270px;
   /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
 }
