@@ -172,6 +172,7 @@ class Raigo extends Table
 
     public function stGameSetup()
     {
+        $this->notifyAllPlayers("log", "DEBUG: stGameSetup", []);
         // First time setup: transition to initial phase
         $this->gamestate->nextState("");
     }
@@ -186,15 +187,18 @@ class Raigo extends Table
         // Kai phase initialization
         // プレイヤーの操作待ちとするため、自動遷移は行わない
         // nextState("skip") は削除
+        $this->notifyAllPlayers("log", "DEBUG: stKai", []);
     }
 
     public function stGen()
     {
+        $this->notifyAllPlayers("log", "DEBUG: stGen", []);
         // Gen phase initialization
     }
 
     public function stSen()
     {
+        $this->notifyAllPlayers("log", "DEBUG: stSen", []);
         // Reset the deck pieces taken counter for this phase
         try {
             self::setGameStateValue('deck_pieces_taken', 0);
@@ -205,21 +209,28 @@ class Raigo extends Table
 
     public function stTsumuHatsu()
     {
+        $this->notifyAllPlayers("log", "DEBUG: stTsumuHatsu", []);
         // TsumuHatsu phase initialization
     }
 
     public function stKakure()
     {
+        $this->notifyAllPlayers("log", "DEBUG: stKakure", []);
         // Kakure phase initialization
     }
 
     public function stEndTurn()
     {
+        $this->notifyAllPlayers("log", "DEBUG: stEndTurn - start", []);
+        
         // Active next player
         $playerId = self::activeNextPlayer();
+        $this->notifyAllPlayers("log", "DEBUG: stEndTurn - activeNextPlayer done (Next: $playerId)", []);
+        
         self::giveExtraTime($playerId);
         
         $this->gamestate->nextState("next");
+        $this->notifyAllPlayers("log", "DEBUG: stEndTurn - nextState called", []);
     }
 
     /*
@@ -649,6 +660,8 @@ class Raigo extends Table
     public function nextPhase()
     {
         self::checkAction("nextPhase");
+        $state = $this->gamestate->state();
+        $this->notifyAllPlayers("log", "DEBUG: nextPhase action called in state: " . $state['name'], []);
         $this->gamestate->nextState("next");
     }
 
