@@ -204,6 +204,22 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       dojo.subscribe("yakuCompleted", this, "onYakuCompleted");
       dojo.subscribe("towerCleared", this, "onTowerCleared");
       dojo.subscribe("kakureMoved", this, "onKakureMoved");
+      dojo.subscribe("setupPieces", this, "onSetupPieces");
+    },
+
+    onSetupPieces: function (notif) {
+      // ページをリロードして最新状態を表示（暫定対応。本来は個別に移動アニメーションさせるのが望ましい）
+      // ただし、この通知が来るときは getAllDatas でも最新が取れるはず。
+      // すでに画面に駒がある場合は重複しないよう注意が必要。
+      this.showMessage("セットアップ完了。駒を配置します...", "info");
+      // 簡易的に全駒再描画（既存の駒を削除してから）
+      dojo.query(".piece").forEach(dojo.destroy);
+      if (this.gamedatas.pieces) {
+        // 注: この時点での gamedatas.pieces は古い可能性があるため、
+        // サーバーから渡された pieces リストを反映するのが正解。
+        // とりあえずリロードで確実に最新を表示させる。
+        window.location.reload();
+      }
     },
 
     onYakuCompleted: function (notif) {
@@ -657,7 +673,13 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       const container = dojo.byId(parentContainerId);
       if (!container) {
-        console.error(`コンテナ '${parentContainerId}' が見つかりません`);
+        // マッピングを試みる
+        parentContainerId = this.getMappedContainerId(containerId, position);
+      }
+
+      const finalContainer = dojo.byId(parentContainerId);
+      if (!finalContainer) {
+        console.error(`コンテナ '${containerId}' (mapped: '${parentContainerId}') が見つかりません`);
         return;
       }
 
@@ -665,7 +687,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       const piece = dojo.create("div", {
         className: "piece",
         id: pieceId
-      }, container);
+      }, finalContainer);
 
       piece.style.position = "absolute";
 
