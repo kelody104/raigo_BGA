@@ -190,10 +190,22 @@ class Raigo extends Table
         $this->notifyAllPlayers("log", "DEBUG: stKai", []);
     }
 
+    public function stPreGen()
+    {
+        $this->notifyAllPlayers("log", "DEBUG: stPreGen (Game State) - Transitioning to Gen", []);
+        $this->gamestate->nextState("next");
+    }
+
     public function stGen()
     {
         $this->notifyAllPlayers("log", "DEBUG: stGen", []);
         // Gen phase initialization
+    }
+
+    public function stPreSen()
+    {
+        $this->notifyAllPlayers("log", "DEBUG: stPreSen (Game State) - Transitioning to Sen", []);
+        $this->gamestate->nextState("next");
     }
 
     public function stSen()
@@ -207,10 +219,22 @@ class Raigo extends Table
         }
     }
 
+    public function stPreTsumuHatsu()
+    {
+        $this->notifyAllPlayers("log", "DEBUG: stPreTsumuHatsu (Game State) - Transitioning to TsumuHatsu", []);
+        $this->gamestate->nextState("next");
+    }
+
     public function stTsumuHatsu()
     {
         $this->notifyAllPlayers("log", "DEBUG: stTsumuHatsu", []);
         // TsumuHatsu phase initialization
+    }
+
+    public function stPreKakure()
+    {
+        $this->notifyAllPlayers("log", "DEBUG: stPreKakure (Game State) - Transitioning to Kakure", []);
+        $this->gamestate->nextState("next");
     }
 
     public function stKakure()

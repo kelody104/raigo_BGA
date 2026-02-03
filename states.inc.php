@@ -24,7 +24,15 @@ $machinestates = array(
         "type" => "activeplayer",
         "action" => "stKai",
         "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 20, "skip" => 20)
+        "transitions" => array("next" => 19, "skip" => 19)
+    ),
+
+    19 => array(
+        "name" => "preGen",
+        "description" => "",
+        "type" => "game",
+        "action" => "stPreGen",
+        "transitions" => array("next" => 20)
     ),
 
     20 => array(
@@ -34,6 +42,14 @@ $machinestates = array(
         "type" => "activeplayer",
         "action" => "stGen",
         "possibleactions" => array("selectInsidePiece", "movePieceToHand", "nextPhase"),
+        "transitions" => array("next" => 29)
+    ),
+
+    29 => array(
+        "name" => "preSen",
+        "description" => "",
+        "type" => "game",
+        "action" => "stPreSen",
         "transitions" => array("next" => 30)
     ),
 
@@ -44,6 +60,14 @@ $machinestates = array(
         "type" => "activeplayer",
         "action" => "stSen",
         "possibleactions" => array("selectDeckPiece", "movePieceFromDeck", "nextPhase"),
+        "transitions" => array("next" => 39)
+    ),
+
+    39 => array(
+        "name" => "preTsumuHatsu",
+        "description" => "",
+        "type" => "game",
+        "action" => "stPreTsumuHatsu",
         "transitions" => array("next" => 40)
     ),
 
@@ -54,6 +78,14 @@ $machinestates = array(
         "type" => "activeplayer",
         "action" => "stTsumuHatsu",
         "possibleactions" => array("actTsumu", "actHatsu", "nextPhase"),
+        "transitions" => array("next" => 79)
+    ),
+
+    79 => array(
+        "name" => "preKakure",
+        "description" => "",
+        "type" => "game",
+        "action" => "stPreKakure",
         "transitions" => array("next" => 80)
     ),
 
