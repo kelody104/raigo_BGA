@@ -602,9 +602,9 @@
 
 /* 積/発 特殊デザイン */
 #raigo-phase-panel.phase-tsumuHatsu {
-  /* 左下から右上への斜線 */
+  /* 左下から右上への斜線 (!importantで強制) */
   background: linear-gradient(to top right, transparent 48%, #2c1b05 49%, #2c1b05 51%, transparent 52%),
-    linear-gradient(135deg, #d3b17d 0%, #b89150 100%);
+    linear-gradient(135deg, #d3b17d 0%, #b89150 100%) !important;
 }
 
 .phase-text-container {
@@ -615,17 +615,17 @@
 
 .phase-tsumuHatsu-left {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  font-size: 28px;
+  top: 6px;
+  left: 6px;
+  font-size: 26px !important;
   line-height: 1;
 }
 
 .phase-tsumuHatsu-right {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-size: 28px;
+  bottom: 6px;
+  right: 6px;
+  font-size: 26px !important;
   line-height: 1;
 }
 
