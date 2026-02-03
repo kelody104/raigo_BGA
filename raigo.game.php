@@ -91,7 +91,7 @@ class Raigo extends Table
                 $typeId = $okugiCandidates[$key];
                 // hand3_p{player_id} コンテナに配置
                 $container = 'hand3_p' . $player_id;
-                $hand3Values[] = "('$container', $pos, $typeId, 'front')";
+                $hand3Values[] = "('$container', $pos, $typeId, 'back')";
                 $pos++;
             }
         }

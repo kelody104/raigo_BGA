@@ -213,7 +213,7 @@ for ($typeNum = 1; $typeNum <= 88; $typeNum++) {
     
     // count 個分の駒を一時配列に追加
     for ($i = 0; $i < $count; $i++) {
-        $deck[] = array('type' => $typeNum, 'face' => 'front');
+        $deck[] = array('type' => $typeNum, 'face' => 'back');
     }
 }
 
