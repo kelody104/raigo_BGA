@@ -220,12 +220,6 @@ for ($typeNum = 1; $typeNum <= 88; $typeNum++) {
 // デッキをシャッフル
 shuffle($deck);
 
-// 最後の1枚を除外駒として抽出
-$exclusionPiece = array_pop($deck);
-if ($exclusionPiece) {
-    $this->game_setup['exclusion'][] = $exclusionPiece;
-}
-
 // 残りを山札に設定
 $this->game_setup['deck'] = $deck;
 

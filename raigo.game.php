@@ -117,30 +117,50 @@ class Raigo extends Table
 
         $players = self::loadPlayersBasicInfos();
         $activePlayerId = self::getActivePlayerId();
+        $playerIds = array_keys($players);
+        // 2人戦を想定し、非アクティブプレイヤーを特定
+        $nonActivePlayerId = ($playerIds[0] == $activePlayerId) ? $playerIds[1] : $playerIds[0];
 
-        foreach ($players as $player_id => $player) {
-            // 仕様書 01, 06 の反映
-            // ターンプレイヤー(01): 1枚, 非ターンプレイヤー(06): 2枚
-            $count = ($player_id == $activePlayerId) ? 1 : 2;
-            
-            // deck から $count 枚取得して inside_p{player_id} へ移動
-            $sql = "SELECT piece_id FROM piece WHERE piece_container = 'deck' ORDER BY piece_position ASC LIMIT $count";
-            $cardsToDraw = self::getObjectListFromDB($sql);
-            
-            $pos = 0;
-            foreach ($cardsToDraw as $c) {
-                $pIdDb = $c['piece_id'];
-                $insideContainer = 'inside_p' . $player_id;
-                // 最初なので position 0 から配置
-                self::DbQuery("UPDATE piece SET piece_container = '$insideContainer', piece_position = $pos WHERE piece_id = $pIdDb");
-                $pos++;
-            }
+        // 山札の「最後の4枚」を取得 (piece_position が大きい順)
+        $sql = "SELECT piece_id FROM piece WHERE piece_container = 'deck' ORDER BY piece_position DESC LIMIT 4";
+        $setupPieces = self::getObjectListFromDB($sql);
 
-            $this->notifyAllPlayers("setupPieces", "", array(
-                'player_id' => $player_id,
-                'count' => $count
-            ));
+        if (count($setupPieces) < 4) {
+            $this->notifyAllPlayers("log", "ERROR: Not enough pieces in deck for setup", []);
+            $this->gamestate->nextState("next");
+            return;
         }
+
+        /*
+         * ユーザー指定の分配:
+         * 最後の4枚を、ターンプレイヤーのinside1, 非ターンプレイヤーのinside1, inside2, 除外駒に1枚ずつ
+         */
+        
+        // 1. 最後の1枚 (pos max) -> 除外駒
+        $pExclusion = $setupPieces[0]['piece_id'];
+        self::DbQuery("UPDATE piece SET piece_container = 'exclusion', piece_position = 0 WHERE piece_id = $pExclusion");
+
+        // 2. 最後から2枚目 -> 非ターンプレイヤー inside1 (pos 0)
+        $pNon1 = $setupPieces[1]['piece_id'];
+        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$nonActivePlayerId', piece_position = 0 WHERE piece_id = $pNon1");
+
+        // 3. 最後から3枚目 -> 非ターンプレイヤー inside2 (pos 1)
+        $pNon2 = $setupPieces[2]['piece_id'];
+        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$nonActivePlayerId', piece_position = 1 WHERE piece_id = $pNon2");
+
+        // 4. 最後から4枚目 -> ターンプレイヤー inside1 (pos 0)
+        $pActive1 = $setupPieces[3]['piece_id'];
+        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$activePlayerId', piece_position = 0 WHERE piece_id = $pActive1");
+
+        // クライアントに通知
+        $this->notifyAllPlayers("setupPieces", "", array(
+            'player_id' => $activePlayerId,
+            'count' => 1
+        ));
+        $this->notifyAllPlayers("setupPieces", "", array(
+            'player_id' => $nonActivePlayerId,
+            'count' => 2
+        ));
 
         $this->gamestate->nextState("next");
     }
