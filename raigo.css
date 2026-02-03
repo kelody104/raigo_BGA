@@ -467,7 +467,7 @@
 
 .deck-top {
   top: calc(50% - 140px);
-  left: calc(50% - 472.5px);
+  left: calc(50% - 472.5px + 315px);
 }
 
 .deck-bottom {
@@ -490,7 +490,7 @@
 .playmat-top {
   top: calc(50% - 150px - 140px);
   transform: none;
-  left: calc(50% - 472.5px);
+  left: calc(50% - 472.5px + 315px);
 }
 
 .playmat-bottom {
