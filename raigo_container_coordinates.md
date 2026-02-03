@@ -29,8 +29,8 @@
 *   **Selector**: `.deck-container`, `.playmat-container`
 *   **Width**: `630px`
 *   **Height**: `70px` (Deck), `140px` (Playmat)
-*   **CSS Left**: `calc(50% - 420px)`
-*   **実効 Left**: `195px`
+*   **CSS Left**: `calc(50% - 437.5px)`
+*   **実効 Left**: `177.5px`
 
 ### フィールド全体 (Pieces Container)
 駒が配置されるメインエリア。
