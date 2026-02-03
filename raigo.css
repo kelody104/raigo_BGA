@@ -467,14 +467,14 @@
 
 .deck-top {
   top: calc(50% - 140px);
-  left: calc(50% - 472.5px + 315px);
+  left: calc(50% - 437.5px + 315px);
 }
 
 .deck-bottom {
   top: calc(50% + 70px);
   transform: none;
   /* 右へ35pxシフト */
-  left: calc(50% - 472.5px + 35px);
+  left: calc(50% - 437.5px + 35px);
 }
 
 /* 手札（Playmat）コンテナ
@@ -490,14 +490,14 @@
 .playmat-top {
   top: calc(50% - 150px - 140px);
   transform: none;
-  left: calc(50% - 472.5px + 315px);
+  left: calc(50% - 437.5px + 315px);
 }
 
 .playmat-bottom {
   top: calc(50% + 150px);
   transform: none;
   /* 右へ35pxシフト */
-  left: calc(50% - 472.5px + 35px);
+  left: calc(50% - 437.5px + 35px);
 }
 
 
