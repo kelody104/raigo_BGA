@@ -163,6 +163,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     onEnteringState: function (stateName, args) {
+      this.isNextPhaseLocked = false;
+
       if (stateName === "genMove" && this.isCurrentPlayerActive()) {
         this.setupGenMovePhase();
       } else if (stateName === "sen" && this.isCurrentPlayerActive()) {
@@ -836,6 +838,45 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
           dojo.addClass(panelEl, "panel-pos-rival");
         }
       }
+    },
+
+    onNextPhase: function (evt) {
+      if (evt) {
+        dojo.stopEvent(evt);
+      }
+
+      // Check current action
+      if (!this.checkAction("nextPhase")) {
+        return;
+      }
+
+      // Prevent double click
+      if (this.isNextPhaseLocked) {
+        return;
+      }
+      this.isNextPhaseLocked = true;
+
+      // Disable button visually
+      const btn = dojo.byId("btn_next_phase"); // Action button
+      const panelBtn = dojo.byId("raigo-next-phase"); // Panel button
+      if (btn) this.setButtonEnabled(btn, false);
+      if (panelBtn) this.setButtonEnabled(panelBtn, false);
+
+      this.ajaxcall(
+        "/raigo/raigo/nextPhase.html",
+        {},
+        this,
+        function (result) {
+          // Success: State update will reset the lock
+          this.isNextPhaseLocked = false;
+        },
+        function (isError) {
+          // Error: Release lock
+          this.isNextPhaseLocked = false;
+          if (btn) this.setButtonEnabled(btn, true);
+          if (panelBtn) this.setButtonEnabled(panelBtn, true);
+        }
+      );
     },
 
     onPhasePanelClick: function (evt) {
