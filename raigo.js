@@ -83,15 +83,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       }
       */
 
-      // ボード視点の設定: 各プレイヤーが自分を手前(下側)に見えるようにボードを回転
-      const board = dojo.byId("raigo-board");
-      if (board && this.gamedatas.players) {
-        const currentPlayerNo = this.gamedatas.players[this.player_id]?.player_no;
-        // プレイヤーNoが2以上の場合はボードを180度回転 (BGA標準の視点切替)
-        if (currentPlayerNo >= 2) {
-          dojo.addClass(board, "board-rotated");
-        }
-      }
+      // ボードの自動回転は無効化し、手前=自分の視点をマッピングで実現
 
 
 
@@ -671,13 +663,13 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         renderPosition = Math.floor(position / 2);
       }
 
-      const container = dojo.byId(parentContainerId);
-      if (!container) {
-        // マッピングを試みる
-        const mappedId = this.getMappedContainerId(containerId, position);
-        if (mappedId !== containerId) {
-          parentContainerId = mappedId;
-          renderPosition = 0; // 個別コンテナにマッピングされた場合は、その中での位置は常に0
+      // 常にマッピングを試みる
+      const mappedId = this.getMappedContainerId(containerId, position);
+      if (mappedId && mappedId !== parentContainerId) {
+        parentContainerId = mappedId;
+        // inside や moon などの単一枠コンテナの場合は、その中での位置を 0 に固定
+        if (parentContainerId.indexOf("inside_") === 0 || parentContainerId.indexOf("moon_") === 0) {
+          renderPosition = 0;
         }
       }
 
