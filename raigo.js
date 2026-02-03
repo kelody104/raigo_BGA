@@ -83,27 +83,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         }
       }
 
-      // 従来のフェーズパネルハンドラー
-      const phasePanelEl = dojo.byId("raigo-phase-panel");
-      if (phasePanelEl) {
-        // 初期状態を「隠」に設定
-        dojo.addClass(phasePanelEl, "phase-state-hidden");
 
-        const self = this;
-        dojo.connect(phasePanelEl, "onclick", this, function (evt) {
-          dojo.stopEvent(evt);
-
-          if (dojo.hasClass(phasePanelEl, "phase-state-hidden")) {
-            // 「隠」状態 → 「積/発」状態に遷移
-            dojo.removeClass(phasePanelEl, "phase-state-hidden");
-            dojo.addClass(phasePanelEl, "phase-state-active");
-          } else if (dojo.hasClass(phasePanelEl, "phase-state-active")) {
-            // 「積/発」状態 → 手番を移動（1度だけ実行）
-            dojo.removeClass(phasePanelEl, "phase-state-active");
-            self.moveToNextPlayer();
-          }
-        });
-      }
 
       // Create test pieces
       const innerBoard = dojo.byId("raigo-board");
