@@ -90,7 +90,7 @@
   width: 35px;
   height: 35px;
   top: 50%;
-  left: 10px;
+  left: 80px;
   /* 画面左端（ボード内）に固定 */
   transform: translateY(-50%);
   z-index: 6;
@@ -107,8 +107,8 @@
   position: absolute;
   width: 980px;
   height: 35px;
-  /* 右へさらに70px拡張: 幅980px, 中心位置をさらに右へ */
-  left: calc(50% + 70px);
+  /* 右へさらに70px拡張: 幅980px, 中心位置をさらに右へ (+70px shift) */
+  left: calc(50% + 140px);
   transform: translateX(-50%);
 }
 
@@ -447,7 +447,7 @@
   position: absolute;
   width: 630px;
   height: 70px;
-  left: calc(50% - 472.5px);
+  left: calc(50% - 402.5px);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -473,7 +473,7 @@
   position: absolute;
   width: 630px;
   height: 140px;
-  left: calc(50% - 472.5px);
+  left: calc(50% - 402.5px);
 }
 
 .playmat-top {
@@ -501,6 +501,7 @@
 #pieces-container {
   position: relative;
   width: 945px;
+  left: 70px;
   /* 27 pieces × 35px */
   height: 270px;
   /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
@@ -512,7 +513,7 @@
 
 #raigo-phase-panel-top {
   position: absolute;
-  left: 12px;
+  left: 82px;
   top: calc(50% - 15px - 90px);
   z-index: 10;
 
@@ -538,7 +539,7 @@
 
 #raigo-phase-panel-bottom {
   position: absolute;
-  left: 12px;
+  left: 82px;
   top: calc(50% + 15px);
   z-index: 10;
 
@@ -567,7 +568,7 @@
   position: absolute;
   top: 12px;
   /* 左35px, 上35pxを削る相当の配置 (左にオフセット、サイズ縮小) */
-  left: 47px;
+  left: 117px;
   z-index: 10;
   width: 85px;
   height: 85px;
