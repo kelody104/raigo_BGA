@@ -645,17 +645,17 @@
 
 .phase-tsumuHatsu-left {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  font-size: 40px !important;
+  top: 15px;
+  left: 15px;
+  font-size: 42px !important;
   line-height: 1;
 }
 
 .phase-tsumuHatsu-right {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
-  font-size: 40px !important;
+  bottom: 15px;
+  right: 15px;
+  font-size: 42px !important;
   line-height: 1;
 }
 
