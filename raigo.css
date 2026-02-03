@@ -90,7 +90,7 @@
   width: 35px;
   height: 35px;
   top: 50%;
-  left: 80px;
+  left: 40px;
   /* 画面左端（ボード内）に固定 */
   transform: translateY(-50%);
   z-index: 6;
