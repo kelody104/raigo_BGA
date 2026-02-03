@@ -138,19 +138,19 @@ class Raigo extends Table
         
         // 1. 最後の1枚 (pos max) -> 除外駒
         $pExclusion = $setupPieces[0]['piece_id'];
-        self::DbQuery("UPDATE piece SET piece_container = 'exclusion', piece_position = 0 WHERE piece_id = $pExclusion");
+        self::DbQuery("UPDATE piece SET piece_container = 'exclusion', piece_position = 0, piece_face = 'back' WHERE piece_id = $pExclusion");
 
         // 2. 最後から2枚目 -> 非ターンプレイヤー inside1 (pos 0)
         $pNon1 = $setupPieces[1]['piece_id'];
-        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$nonActivePlayerId', piece_position = 0 WHERE piece_id = $pNon1");
+        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$nonActivePlayerId', piece_position = 0, piece_face = 'front' WHERE piece_id = $pNon1");
 
         // 3. 最後から3枚目 -> 非ターンプレイヤー inside2 (pos 1)
         $pNon2 = $setupPieces[2]['piece_id'];
-        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$nonActivePlayerId', piece_position = 1 WHERE piece_id = $pNon2");
+        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$nonActivePlayerId', piece_position = 1, piece_face = 'front' WHERE piece_id = $pNon2");
 
         // 4. 最後から4枚目 -> ターンプレイヤー inside1 (pos 0)
         $pActive1 = $setupPieces[3]['piece_id'];
-        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$activePlayerId', piece_position = 0 WHERE piece_id = $pActive1");
+        self::DbQuery("UPDATE piece SET piece_container = 'inside_p$activePlayerId', piece_position = 0, piece_face = 'front' WHERE piece_id = $pActive1");
 
         // クライアントに通知
         $this->notifyAllPlayers("setupPieces", "", array(
@@ -167,9 +167,42 @@ class Raigo extends Table
 
     protected function getAllDatas(): array
     {
+        $current_player_id = self::getCurrentPlayerId();
         $pieces = self::getObjectListFromDB("SELECT piece_id, piece_container, piece_position, piece_type, piece_face FROM piece ORDER BY piece_position");
+
+        // 所有者のみが確認できるコンテナの接頭辞
+        $private_prefixes = ['moon_p', 'hand_p', 'inside_p', 'cloud_p', 'oumon_p', 'oumoncircle_p', 'hand3_p'];
         
-        // deck_pieces_taken の値を安全に取得（存在しない場合は0）
+        // 駒情報のフィルタリング
+        foreach ($pieces as &$p) {
+            $container = $p['piece_container'];
+            
+            $is_secret = false;
+
+            // 1. 山札と除外駒は常に秘匿
+            if ($container === 'deck' || $container === 'exclusion') {
+                $is_secret = true;
+            } else {
+                // 2. 他人の私的エリアの駒は秘匿
+                foreach ($private_prefixes as $prefix) {
+                    if (strpos($container, $prefix) === 0) {
+                        // プレイヤーIDを抽出 (例: inside_p123 -> 123)
+                        $owner_id = substr($container, strlen($prefix));
+                        if ($owner_id != $current_player_id) {
+                            $is_secret = true;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if ($is_secret) {
+                $p['piece_type'] = 0; // 不明
+                $p['piece_face'] = 'back'; // 裏向き強制
+            }
+        }
+        
+        // deck_pieces_taken の値を安全に取得
         $deckPiecesTaken = 0;
         try {
             $deckPiecesTaken = (int) self::getGameStateValue('deck_pieces_taken');
@@ -177,16 +210,13 @@ class Raigo extends Table
             $deckPiecesTaken = 0;
         }
 
-        // 現在の手番プレイヤーIDを取得
-        $activePlayerId = $this->getActivePlayerId();
-
         return array(
             'players' => self::loadPlayersBasicInfos(),
             'pieces' => $pieces,
             'piece_types' => $this->piece_types,
             'gamestate' => $this->gamestate->state(),
             'deck_pieces_taken' => $deckPiecesTaken,
-            'active_player_id' => $activePlayerId
+            'active_player_id' => $this->getActivePlayerId()
         );
     }
 
