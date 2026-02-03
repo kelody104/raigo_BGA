@@ -602,8 +602,8 @@
 
 /* 積/発 特殊デザイン */
 #raigo-phase-panel.phase-tsumuHatsu {
-  /* 左下から右上への斜線 (!importantで強制) */
-  background: linear-gradient(to top right, transparent 48%, #2c1b05 49%, #2c1b05 51%, transparent 52%),
+  /* 右上がりの斜線 (進行方向to bottom rightに垂直) */
+  background: linear-gradient(to bottom right, transparent 48%, #2c1b05 49%, #2c1b05 51%, transparent 52%),
     linear-gradient(135deg, #d3b17d 0%, #b89150 100%) !important;
 }
 
