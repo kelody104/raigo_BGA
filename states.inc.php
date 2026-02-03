@@ -5,7 +5,15 @@ $machinestates = array(
         "description" => "",
         "type" => "manager",
         "action" => "stGameSetup",
-        "transitions" => array("" => 10)
+        "transitions" => array("" => 2)
+    ),
+
+    2 => array(
+        "name" => "setupGame",
+        "description" => "",
+        "type" => "game",
+        "action" => "stSetupGame",
+        "transitions" => array("next" => 10)
     ),
 
     5 => array(
@@ -24,82 +32,82 @@ $machinestates = array(
         "type" => "activeplayer",
         "action" => "stKai",
         "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 19, "skip" => 19)
+        "transitions" => array("next" => 29, "skip" => 29)
     ),
 
-    19 => array(
+    29 => array(
         "name" => "preGen",
         "description" => "",
         "type" => "game",
         "action" => "stPreGen",
-        "transitions" => array("next" => 20)
+        "transitions" => array("next" => 30)
     ),
 
-    20 => array(
+    30 => array(
         "name" => "gen",
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
         "action" => "stGen",
         "possibleactions" => array("selectInsidePiece", "movePieceToHand", "nextPhase"),
-        "transitions" => array("next" => 29)
+        "transitions" => array("next" => 39)
     ),
 
-    29 => array(
+    39 => array(
         "name" => "preSen",
         "description" => "",
         "type" => "game",
         "action" => "stPreSen",
-        "transitions" => array("next" => 30)
+        "transitions" => array("next" => 40)
     ),
 
-    30 => array(
+    40 => array(
         "name" => "sen",
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
         "action" => "stSen",
         "possibleactions" => array("selectDeckPiece", "movePieceFromDeck", "nextPhase"),
-        "transitions" => array("next" => 39)
+        "transitions" => array("next" => 49)
     ),
 
-    39 => array(
+    49 => array(
         "name" => "preTsumuHatsu",
         "description" => "",
         "type" => "game",
         "action" => "stPreTsumuHatsu",
-        "transitions" => array("next" => 40)
+        "transitions" => array("next" => 50)
     ),
 
-    40 => array(
+    50 => array(
         "name" => "tsumuHatsu",
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
         "action" => "stTsumuHatsu",
         "possibleactions" => array("actTsumu", "actHatsu", "nextPhase"),
-        "transitions" => array("next" => 79)
+        "transitions" => array("next" => 89)
     ),
 
-    79 => array(
+    89 => array(
         "name" => "preKakure",
         "description" => "",
         "type" => "game",
         "action" => "stPreKakure",
-        "transitions" => array("next" => 80)
+        "transitions" => array("next" => 90)
     ),
 
-    80 => array(
+    90 => array(
         "name" => "kakure",
         "description" => "",
         "descriptionmyturn" => "",
         "type" => "activeplayer",
         "action" => "stKakure",
         "possibleactions" => array("nextPhase"),
-        "transitions" => array("next" => 60)
+        "transitions" => array("next" => 95)
     ),
 
-    60 => array(
+    95 => array(
         "name" => "endTurn",
         "description" => "",
         "type" => "game",

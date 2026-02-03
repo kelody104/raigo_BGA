@@ -1,8 +1,9 @@
 define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, declare) {
   return declare("bgagame.raigo", ebg.core.gamegui, {
     constructor: function () {
-      this.phaseOrder = ["kai", "gen", "sen", "tsumuHatsu", "kakure"];
+      this.phaseOrder = ["setupGame", "kai", "gen", "sen", "tsumuHatsu", "kakure"];
       this.phaseText = {
+        setupGame: { name: "", sub: "セットアップ中" },
         kai: { name: "開", sub: "条件を満たさない場合はスキップ" },
         gen: { name: "現", sub: "insideからhandへ移動" },
         sen: { name: "選", sub: "雷山から駒を引く" },
@@ -10,11 +11,20 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         kakure: { name: "隠", sub: "隠駒を移動してターン終了" },
       };
       this.phaseShortName = {
+        setupGame: null,
         kai: "開",
         gen: "現",
         sen: "選",
         tsumuHatsu: "発",
         kakure: "隠",
+      };
+      this.phaseIndexMap = {
+        setupGame: "00",
+        kai: "10",
+        gen: "20",
+        sen: "30",
+        tsumuHatsu: "50",
+        kakure: "80"
       };
       this.selectedInsideId = null; // genMove phase中に選択されたinside要素ID
       this.isMovingToNextPlayer = false; // 手番移動中フラグ
@@ -800,11 +810,15 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       }
 
       const shortName = this.phaseShortName[stateName];
+      const phaseNum = this.phaseIndexMap[stateName] || "--";
+
+      // 番号を表示 (raigo.css 側で .phase-number などのスタイルが必要かもしれません)
+      const phaseNumHtml = `<div class="phase-number" style="font-size:10px; opacity:0.6; position:absolute; top:5px; left:5px;">${phaseNum}</div>`;
 
       if (stateName === "tsumuHatsu") {
-        nameEl.innerHTML = '<div class="phase-text-container"><span class="phase-tsumuHatsu-left">積</span><span class="phase-tsumuHatsu-right">発</span></div>';
+        nameEl.innerHTML = phaseNumHtml + '<div class="phase-text-container"><span class="phase-tsumuHatsu-left">積</span><span class="phase-tsumuHatsu-right">発</span></div>';
       } else {
-        nameEl.innerHTML = shortName;
+        nameEl.innerHTML = phaseNumHtml + (shortName || "");
       }
 
       subEl.innerHTML = this.isCurrentPlayerActive() ? "あなたの手番です" : "相手の手番です";
