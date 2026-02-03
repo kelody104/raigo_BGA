@@ -183,16 +183,9 @@ class Raigo extends Table
 
     public function stKai()
     {
-        $playerId = $this->getActivePlayerId();
-
-        $this->notifyAllPlayers(
-            "log",
-            clienttranslate('${player_name} skips Kai phase (開)'),
-            array(
-                "player_name" => $this->getPlayerNameById($playerId)
-            )
-        );
-        $this->gamestate->nextState("skip");
+        // Kai phase initialization
+        // プレイヤーの操作待ちとするため、自動遷移は行わない
+        // nextState("skip") は削除
     }
 
     public function stGen()
