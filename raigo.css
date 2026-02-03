@@ -1,6 +1,6 @@
 #raigo-root {
   position: relative;
-  width: 1200px;
+  width: 1270px;
   height: 620px;
   margin: 0 auto;
   background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -14,7 +14,7 @@
 
 #raigo-board {
   position: relative;
-  width: 1160px;
+  width: 1230px;
   height: 580px;
   margin: 20px;
   background: rgba(0, 0, 0, 0.2);
