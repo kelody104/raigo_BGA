@@ -105,10 +105,10 @@
 /* 中央線から15px空けた上下のコンテナ（横875×縦35） */
 .row-container {
   position: absolute;
-  width: 875px;
+  width: 910px;
   height: 35px;
-  /* 左へ35px拡張: 中心位置を +35px から +17.5px へ調整 */
-  left: calc(50% + 17.5px);
+  /* 右へ35px拡張: 幅910px, 中心位置をさらに右へ */
+  left: calc(50% + 35px);
   transform: translateX(-50%);
 }
 
@@ -500,8 +500,8 @@
 
 #pieces-container {
   position: relative;
-  width: 840px;
-  /* 24 pieces × 35px */
+  width: 875px;
+  /* 25 pieces × 35px */
   height: 270px;
   /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
 }
@@ -573,7 +573,7 @@
   height: 85px;
   box-sizing: border-box;
 
-  background: linear-gradient(135deg, #d3b17d 0%, #b89150 100%);
+  background: linear-gradient(145deg, #ffb347, #ff8c00);
   border: 2px solid #8e6d3b;
   border-radius: 8px;
   color: #2c1b05;
@@ -604,7 +604,7 @@
 #raigo-phase-panel.phase-tsumuHatsu {
   /* 右上がりの斜線 (進行方向to bottom rightに垂直) */
   background: linear-gradient(to bottom right, transparent 48%, #2c1b05 49%, #2c1b05 51%, transparent 52%),
-    linear-gradient(135deg, #d3b17d 0%, #b89150 100%) !important;
+    linear-gradient(145deg, #ffb347, #ff8c00) !important;
 }
 
 .phase-text-container {
@@ -617,7 +617,7 @@
   position: absolute;
   top: 4px;
   left: 4px;
-  font-size: 32px !important;
+  font-size: 34px !important;
   line-height: 1;
 }
 
@@ -625,7 +625,7 @@
   position: absolute;
   bottom: 4px;
   right: 4px;
-  font-size: 32px !important;
+  font-size: 34px !important;
   line-height: 1;
 }
 
