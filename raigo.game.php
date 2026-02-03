@@ -55,14 +55,19 @@ class Raigo extends Table
         self::DbQuery("DELETE FROM piece");
 
         // game_setup 定義に基づいて駒（山札・除外駒）を配置
+        $sqlValues = array();
         foreach ($this->game_setup as $container => $pieces) {
             $position = 0;
             foreach ($pieces as $pieceData) {
                 $type = $pieceData['type'];
                 $face = $pieceData['face'];
-                self::DbQuery("INSERT INTO piece (piece_container, piece_position, piece_type, piece_face) VALUES ('$container', $position, $type, '$face')");
+                $sqlValues[] = "('$container', $position, $type, '$face')";
                 $position++;
             }
+        }
+        if (!empty($sqlValues)) {
+            $sql = "INSERT INTO piece (piece_container, piece_position, piece_type, piece_face) VALUES " . implode(',', $sqlValues);
+            self::DbQuery($sql);
         }
 
         // --- 奥義駒 (hand3) の配布 ---
@@ -75,6 +80,7 @@ class Raigo extends Table
         }
 
         // 各プレイヤーに3枚ずつ配布
+        $hand3Values = array();
         foreach ($players as $player_id => $player) {
             // 候補からランダムに3つ選ぶ（重複なし）
             $keys = array_rand($okugiCandidates, 3);
@@ -85,9 +91,13 @@ class Raigo extends Table
                 $typeId = $okugiCandidates[$key];
                 // hand3_p{player_id} コンテナに配置
                 $container = 'hand3_p' . $player_id;
-                self::DbQuery("INSERT INTO piece (piece_container, piece_position, piece_type, piece_face) VALUES ('$container', $pos, $typeId, 'front')");
+                $hand3Values[] = "('$container', $pos, $typeId, 'front')";
                 $pos++;
             }
+        }
+        if (!empty($hand3Values)) {
+            $sql = "INSERT INTO piece (piece_container, piece_position, piece_type, piece_face) VALUES " . implode(',', $hand3Values);
+            self::DbQuery($sql);
         }
 
         // --- 先手後手の決定 ---
@@ -98,8 +108,6 @@ class Raigo extends Table
         // 先手: 1枚, 後手: 2枚
         $pIds = array_keys($players);
         // 先手が $activePlayerId なので、そのプレイヤーから順に処理
-        // ただし BGA の activeNextPlayer は setup 段階では単純にプレイヤー順序を回すだけかもしれないが
-        // ここでは明示的に判定して配布する
         
         foreach ($players as $player_id => $player) {
             $count = ($player_id == $firstPlayerId) ? 1 : 2;
