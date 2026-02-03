@@ -102,6 +102,9 @@ class Raigo extends Table
 
         // --- 初期スコア設定 (2点) ---
         self::DbQuery("UPDATE player SET player_score = 2");
+
+        // 先手後手の決定 (最初のプレイヤーをアクティブにする)
+        self::activeNextPlayer();
     }
 
     /**
