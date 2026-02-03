@@ -1,7 +1,7 @@
 #raigo-root {
   position: relative;
   width: 1270px;
-  height: 620px;
+  height: 650px;
   margin: 0 auto;
   background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   background-attachment: fixed;
@@ -15,7 +15,7 @@
 #raigo-board {
   position: relative;
   width: 1230px;
-  height: 580px;
+  height: 610px;
   margin: 20px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 16px;
@@ -528,7 +528,7 @@
 
 #raigo-phase-panel-top {
   position: absolute;
-  left: 82px;
+  left: 12px;
   top: calc(50% - 15px - 90px);
   z-index: 10;
 
@@ -554,7 +554,7 @@
 
 #raigo-phase-panel-bottom {
   position: absolute;
-  left: 82px;
+  left: 12px;
   top: calc(50% + 15px);
   z-index: 10;
 
@@ -580,14 +580,14 @@
 
 /* フェーズパネル（隠駒）のデザイン：実物の駒と同じスタイル */
 /* フェーズパネル（隠駒・現在フェーズ表示）
-   - 左位置: 117px (除外ゾーンの隣)
+   - 左位置: 47px (除外ゾーンの隣の隣)
    - 実物の駒と同じデザイン
 */
 #raigo-phase-panel {
   position: absolute;
   top: 12px;
   /* 左35px, 上35pxを削る相当の配置 (左にオフセット、サイズ縮小) */
-  left: 117px;
+  left: 47px;
   z-index: 10;
   width: 85px;
   height: 85px;
