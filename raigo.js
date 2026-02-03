@@ -163,7 +163,16 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     onEnteringState: function (stateName, args) {
-      this.isNextPhaseLocked = false;
+      // Add delay to prevent deadlock caused by rapid sequential requests
+      setTimeout(() => {
+        this.isNextPhaseLocked = false;
+
+        // Ensure buttons are enabled visually if they exist
+        const btn = dojo.byId("btn_next_phase");
+        const panelBtn = dojo.byId("raigo-next-phase");
+        if (btn) this.setButtonEnabled(btn, true);
+        if (panelBtn) this.setButtonEnabled(panelBtn, true);
+      }, 800); // Increased to 800ms for safety
 
       if (stateName === "genMove" && this.isCurrentPlayerActive()) {
         this.setupGenMovePhase();
