@@ -83,15 +83,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       }
       */
 
-      // ボード視点の設定: 各プレイヤーが自分を上側に見えるようにボードを回転
-      const board = dojo.byId("raigo-board");
-      if (board && this.gamedatas.players) {
-        const currentPlayerNo = this.gamedatas.players[this.player_id]?.player_no;
-        // プレイヤーNoが2以上の場合はボードを180度回転
-        if (currentPlayerNo >= 2) {
-          dojo.addClass(board, "board-rotated");
-        }
-      }
+      // ボード回転は無効化 (全プレイヤー共通の視点)
 
 
 
@@ -783,7 +775,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       if (dbContainerId.indexOf("inside_p") === 0) {
         const parts = dbContainerId.split("_"); // inside, p{playerId}
         const playerId = parts[1].substring(1);
-        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        const pNo = this.gamedatas.players[playerId].player_no;
+        const suffix = (pNo == 1) ? "myself" : "rival";
         // position 0, 1, 2 -> 1, 2, 3
         const posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
         return `inside_${suffix}_${posIndex}`;
@@ -793,7 +786,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       if (dbContainerId.indexOf("hand_p") === 0) {
         const parts = dbContainerId.split("_");
         const playerId = parts[1].substring(1);
-        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        const pNo = this.gamedatas.players[playerId].player_no;
+        const suffix = (pNo == 1) ? "myself" : "rival";
         const posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
         return `hand_${suffix}_${posIndex}`;
       }
@@ -807,7 +801,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       if (dbContainerId.indexOf("moon_p") === 0) {
         const parts = dbContainerId.split("_");
         const playerId = parts[1].substring(1);
-        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        const pNo = this.gamedatas.players[playerId].player_no;
+        const suffix = (pNo == 1) ? "myself" : "rival";
         return `moon_${suffix}`;
       }
 
