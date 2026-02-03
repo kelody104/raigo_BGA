@@ -886,12 +886,29 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         return;
       }
 
+      // Prevent double click
+      if (this.isNextPhaseLocked) {
+        return;
+      }
+      this.isNextPhaseLocked = true;
+
+      // Disable button visually to indicate processing
+      const btn = dojo.byId("btn_next_phase");
+      if (btn) this.setButtonEnabled(btn, false);
+
       this.ajaxcall(
         "/raigo/raigo/nextPhase.html",
         {},
         this,
-        function () { },
-        function () { }
+        function (result) {
+          // Success: Lock will be reset in onEnteringState
+          this.isNextPhaseLocked = false;
+        },
+        function (isError) {
+          // Error: Release lock
+          this.isNextPhaseLocked = false;
+          if (btn) this.setButtonEnabled(btn, true);
+        }
       );
     },
 
