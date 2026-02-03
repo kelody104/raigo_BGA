@@ -129,7 +129,7 @@
   position: absolute;
   width: 245px;
   height: 210px;
-  left: calc(50% + 192.5px);
+  left: calc(50% + 175px);
   /* deck/playmat から右へ560+35 */
   display: none;
   /* 非表示 */
@@ -145,73 +145,73 @@
 /* tower_rival列の位置指定 */
 #tower_rival_1 {
   /* 左へ35pxシフト: -385 -> -420 */
-  left: calc(50% + 192.5px - 420px);
+  left: calc(50% + 175px - 420px);
   top: calc(50% - 65px - 210px);
 }
 
 #tower_rival_2 {
-  left: calc(50% + 192.5px - 455px);
+  left: calc(50% + 175px - 455px);
   top: calc(50% - 65px - 210px);
 }
 
 #tower_rival_3 {
-  left: calc(50% + 192.5px - 490px);
+  left: calc(50% + 175px - 490px);
   top: calc(50% - 65px - 210px);
 }
 
 #tower_rival_4 {
-  left: calc(50% + 192.5px - 525px);
+  left: calc(50% + 175px - 525px);
   top: calc(50% - 65px - 210px);
 }
 
 #tower_rival_5 {
-  left: calc(50% + 192.5px - 560px);
+  left: calc(50% + 175px - 560px);
   top: calc(50% - 65px - 210px);
 }
 
 #tower_rival_6 {
-  left: calc(50% + 192.5px - 595px);
+  left: calc(50% + 175px - 595px);
   top: calc(50% - 65px - 210px);
 }
 
 #tower_rival_7 {
-  left: calc(50% + 192.5px - 630px);
+  left: calc(50% + 175px - 630px);
   top: calc(50% - 65px - 210px);
 }
 
 /* tower_myself列の位置指定 */
 #tower_myself_1 {
-  left: calc(50% + 192.5px + 35px);
+  left: calc(50% + 175px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_2 {
-  left: calc(50% + 192.5px + 35px + 35px);
+  left: calc(50% + 175px + 35px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_3 {
-  left: calc(50% + 192.5px + 70px + 35px);
+  left: calc(50% + 175px + 70px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_4 {
-  left: calc(50% + 192.5px + 105px + 35px);
+  left: calc(50% + 175px + 105px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_5 {
-  left: calc(50% + 192.5px + 140px + 35px);
+  left: calc(50% + 175px + 140px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_6 {
-  left: calc(50% + 192.5px + 175px + 35px);
+  left: calc(50% + 175px + 175px + 35px);
   top: calc(50% + 65px);
 }
 
 #tower_myself_7 {
-  left: calc(50% + 192.5px + 210px + 35px);
+  left: calc(50% + 175px + 210px + 35px);
   top: calc(50% + 65px);
 }
 
@@ -442,20 +442,20 @@
   /* 中央線の下側に65px空ける */
   transform: none;
   /* 右へ35pxシフト */
-  left: calc(50% + 192.5px + 35px);
+  left: calc(50% + 175px + 35px);
 }
 
 /* deck/playmat を左側に、tower を右側に35px間隔で横並び配置 */
 /* deckコンテナ：山札としての厚みを演出 */
 /* 山札（Deck）コンテナ
-   - 座標: 幅630px, 左位置212.5px相当 (CSS: calc(50% - 402.5px))
+   - 座標: 幅630px, 左位置212.5px相当 (CSS: calc(50% - 420px))
    - 3D回転効果あり
 */
 .deck-container {
   position: absolute;
   width: 630px;
   height: 70px;
-  left: calc(50% - 402.5px);
+  left: calc(50% - 420px);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -484,7 +484,7 @@
   position: absolute;
   width: 630px;
   height: 140px;
-  left: calc(50% - 402.5px);
+  left: calc(50% - 420px);
 }
 
 .playmat-top {
@@ -515,9 +515,9 @@
 */
 #pieces-container {
   position: relative;
-  width: 945px;
-  left: 70px;
   /* 27 pieces × 35px */
+  /* 左へ70pxシフト -> さらに-17.5px = 52.5px */
+  left: 52.5px;
   height: 270px;
   /* Total height: 70 + 20 + 35 + 20 + 35 + 20 + 70 */
 }

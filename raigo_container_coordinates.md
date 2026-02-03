@@ -29,17 +29,17 @@
 *   **Selector**: `.deck-container`, `.playmat-container`
 *   **Width**: `630px`
 *   **Height**: `70px` (Deck), `140px` (Playmat)
-*   **CSS Left**: `calc(50% - 402.5px)`
-*   **実効 Left**: `212.5px`
+*   **CSS Left**: `calc(50% - 420px)`
+*   **実効 Left**: `195px`
 
 ### フィールド全体 (Pieces Container)
 駒が配置されるメインエリア。
 *   **Selector**: `#pieces-container`
 *   **Width**: `945px`
 *   **Height**: `270px`
-*   **CSS Left**: `70px` (position: relative)
-    *   Flex配置による中央 (`142.5px`) から `+70px` シフト。
-*   **実効 Left**: `212.5px` (概算)
+*   **CSS Left**: `52.5px` (position: relative)
+    *   Flex配置による中央 (`142.5px`) から `+52.5px` シフト。
+*   **実効 Left**: `195px` (概算)
 
 ## 3. サイドパーツ配置
 
