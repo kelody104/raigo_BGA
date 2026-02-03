@@ -674,7 +674,11 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       const container = dojo.byId(parentContainerId);
       if (!container) {
         // マッピングを試みる
-        parentContainerId = this.getMappedContainerId(containerId, position);
+        const mappedId = this.getMappedContainerId(containerId, position);
+        if (mappedId !== containerId) {
+          parentContainerId = mappedId;
+          renderPosition = 0; // 個別コンテナにマッピングされた場合は、その中での位置は常に0
+        }
       }
 
       const finalContainer = dojo.byId(parentContainerId);
