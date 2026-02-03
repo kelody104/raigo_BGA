@@ -90,7 +90,7 @@
   width: 35px;
   height: 35px;
   top: 50%;
-  left: 40px;
+  left: 10px;
   /* 画面左端（ボード内）に固定 */
   transform: translateY(-50%);
   z-index: 6;
@@ -103,6 +103,10 @@
 }
 
 /* 中央線から15px空けた上下のコンテナ（横875×縦35） */
+/* 中央線（グラデーションライン）コンテナ
+   - 座標: 幅980px, 左位置265px相当 (CSS: calc(50% + 140px))
+   - 右方向にシフトして配置
+*/
 .row-container {
   position: absolute;
   width: 980px;
@@ -443,6 +447,10 @@
 
 /* deck/playmat を左側に、tower を右側に35px間隔で横並び配置 */
 /* deckコンテナ：山札としての厚みを演出 */
+/* 山札（Deck）コンテナ
+   - 座標: 幅630px, 左位置212.5px相当 (CSS: calc(50% - 402.5px))
+   - 3D回転効果あり
+*/
 .deck-container {
   position: absolute;
   width: 630px;
@@ -469,6 +477,9 @@
   left: calc(50% - 472.5px + 35px);
 }
 
+/* 手札（Playmat）コンテナ
+   - 座標: 幅630px, 左位置212.5px相当
+*/
 .playmat-container {
   position: absolute;
   width: 630px;
@@ -498,6 +509,10 @@
   /* 横幅35pxの駒を中央に配置 */
 }
 
+/* ゲームフィールド（駒配置エリア）
+   - 座標: 幅945px, 相対配置で左に70pxシフト
+   - 27列 × 35px
+*/
 #pieces-container {
   position: relative;
   width: 945px;
@@ -564,6 +579,10 @@
 }
 
 /* フェーズパネル（隠駒）のデザイン：実物の駒と同じスタイル */
+/* フェーズパネル（隠駒・現在フェーズ表示）
+   - 左位置: 117px (除外ゾーンの隣)
+   - 実物の駒と同じデザイン
+*/
 #raigo-phase-panel {
   position: absolute;
   top: 12px;
