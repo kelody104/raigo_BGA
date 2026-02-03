@@ -473,8 +473,8 @@
 .deck-bottom {
   top: calc(50% + 70px);
   transform: none;
-  /* 右へ35pxシフト */
-  left: calc(50% - 472.5px + 35px);
+  /* 基準位置へ戻す (左へ35pxシフト) */
+  left: calc(50% - 472.5px);
 }
 
 /* 手札（Playmat）コンテナ
@@ -496,8 +496,8 @@
 .playmat-bottom {
   top: calc(50% + 150px);
   transform: none;
-  /* 右へ35pxシフト */
-  left: calc(50% - 472.5px + 35px);
+  /* 基準位置へ戻す (左へ35pxシフト) */
+  left: calc(50% - 472.5px);
 }
 
 
