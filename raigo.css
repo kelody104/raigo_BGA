@@ -648,40 +648,7 @@
   line-height: 1.2;
 }
 
-.phase-tsumuHatsu {
-  position: relative;
-  width: 90px;
-  height: 90px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transform: scale(0.9);
-}
 
-.phase-tsumuHatsu::before {
-  content: "";
-  position: absolute;
-  width: 120%;
-  height: 3px;
-  background: #2c1b05;
-  transform: rotate(-45deg);
-  top: 50%;
-  left: -10%;
-}
-
-.phase-tsumuHatsu-left {
-  font-size: 48px;
-  display: block;
-}
-
-.phase-tsumuHatsu-right {
-  font-size: 48px;
-  display: block;
-  align-self: flex-end;
-  position: relative;
-  left: -2px;
-  top: -6px;
-}
 
 #raigo-phase-sub {
   display: none;
