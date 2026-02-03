@@ -802,7 +802,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       const shortName = this.phaseShortName[stateName];
 
       if (stateName === "tsumuHatsu") {
-        nameEl.innerHTML = '<span class="phase-tsumuHatsu"><span class="phase-tsumuHatsu-left">積</span><span class="phase-tsumuHatsu-right">発</span></span>';
+        nameEl.innerHTML = '<div class="phase-text-container"><span class="phase-tsumuHatsu-left">積</span><span class="phase-tsumuHatsu-right">発</span></div>';
       } else {
         nameEl.innerHTML = shortName;
       }
@@ -814,6 +814,12 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       // ターンに応じてパネルの背景色と位置を変更
       if (panelEl) {
+        if (stateName === "tsumuHatsu") {
+          dojo.addClass(panelEl, "phase-tsumuHatsu");
+        } else {
+          dojo.removeClass(panelEl, "phase-tsumuHatsu");
+        }
+
         dojo.removeClass(panelEl, "panel-pos-myself");
         dojo.removeClass(panelEl, "panel-pos-rival");
 
