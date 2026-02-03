@@ -773,6 +773,48 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       });
     },
 
+    getMappedContainerId: function (dbContainerId, position) {
+      if (!dbContainerId) return dbContainerId;
+
+      // すでにDOMに存在するIDならそのまま返す
+      if (dojo.byId(dbContainerId)) return dbContainerId;
+
+      // inside_p{playerId} -> inside_{myself|rival}_{pos+1}
+      if (dbContainerId.indexOf("inside_p") === 0) {
+        const parts = dbContainerId.split("_"); // inside, p{playerId}
+        const playerId = parts[1].substring(1);
+        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        // position 0, 1, 2 -> 1, 2, 3
+        const posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
+        return `inside_${suffix}_${posIndex}`;
+      }
+
+      // hand_p{playerId} -> hand_{myself|rival}_{pos+1}
+      if (dbContainerId.indexOf("hand_p") === 0) {
+        const parts = dbContainerId.split("_");
+        const playerId = parts[1].substring(1);
+        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        const posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
+        return `hand_${suffix}_${posIndex}`;
+      }
+
+      // hand3_p{playerId} -> hand_{myself|rival}_{pos+1} (奥義駒)
+      if (dbContainerId.indexOf("hand3_p") === 0) {
+        return null;
+      }
+
+      // moon_p{playerId} -> moon_{myself|rival}
+      if (dbContainerId.indexOf("moon_p") === 0) {
+        const parts = dbContainerId.split("_");
+        const playerId = parts[1].substring(1);
+        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        return `moon_${suffix}`;
+      }
+
+      return dbContainerId;
+    },
+
+
     onNextPhase: function (evt) {
       if (evt) {
         dojo.stopEvent(evt);
