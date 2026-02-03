@@ -334,9 +334,9 @@
 }
 
 .moon-rival {
-  /* X: hand_rival_1 (105px shift), Y: inside_rival_1 (-50px) と同じ位置 */
+  /* X: hand_rival_1 (105px shift), Y: inside_rival_1 (+52.5px) と同じ位置 */
   left: calc(231px + 100.5px + 85px + 35px + 140px + 100px - 105px);
-  top: calc(50% - 52.5px);
+  top: calc(50% + 52.5px);
   transform: translateY(-50%);
 }
 
@@ -372,12 +372,12 @@
 }
 
 .head-rival {
-  top: calc(50% - 50px);
+  top: calc(50% + 52.5px);
   transform: translateY(-50%);
 }
 
 .cloud-rival {
-  top: calc(50% + 50px);
+  top: calc(50% - 52.5px);
   transform: translateY(-50%);
 }
 
@@ -389,12 +389,12 @@
 }
 
 .head-myself {
-  top: calc(50% - 50px);
+  top: calc(50% - 52.5px);
   transform: translateY(-50%);
 }
 
 .cloud-myself {
-  top: calc(50% + 50px);
+  top: calc(50% + 52.5px);
   transform: translateY(-50%);
 }
 
@@ -406,17 +406,27 @@
   transform: translateY(-50%);
 }
 
-.inside-rival-1,
+.inside-rival-1 {
+  /* 中央の52.5px下 (敵側は配置が反転) */
+  top: calc(50% + 52.5px);
+  transform: translateY(-50%);
+}
+
 .inside-myself-1 {
   /* 中央の52.5px上 */
   top: calc(50% - 52.5px);
   transform: translateY(-50%);
 }
 
-.inside-rival-3,
+.inside-rival-3 {
+  /* 中央の52.5px上 (敵側は配置が反転) */
+  top: calc(50% - 52.5px);
+  transform: translateY(-50%);
+}
+
 .inside-myself-3 {
-  /* 中央の50px下 */
-  top: calc(50% + 50px);
+  /* 中央の52.5px下 */
+  top: calc(50% + 52.5px);
   transform: translateY(-50%);
 }
 
