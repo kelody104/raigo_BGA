@@ -744,40 +744,6 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       console.log(`駒を表示しました: ${pieceId} in ${containerId} (位置: ${position}), left=${piece.style.left}, top=${piece.style.top}, backgroundImage=${piece.style.backgroundImage}`);
 
-      // 駒をクリックすると裏表が切り替わる (デバッグ/確認用)
-      dojo.connect(piece, "onclick", this, function (evt) {
-        dojo.stopEvent(evt);
-
-        // 公開不可エリア(deck, exclusion)はクリック無効
-        if (containerId === "deck" || containerId === "exclusion") {
-          return;
-        }
-
-        // 所有者でない私的エリアの駒（typeが不明）はクリック無効
-        if (type == 0) {
-          console.log("[togglePiece] この駒の情報は隠されています");
-          return;
-        }
-
-        // 現在の状態を判定
-        const isFront = dojo.hasClass(piece, "piece-front");
-        const newFace = isFront ? "back" : "front";
-
-        // クラスを切り替え
-        if (isFront) {
-          dojo.removeClass(piece, "piece-front");
-          dojo.addClass(piece, "piece-back");
-          piece.textContent = "";
-        } else {
-          dojo.removeClass(piece, "piece-back");
-          dojo.addClass(piece, "piece-front");
-          const pt = (this.gamedatas && this.gamedatas.piece_types && typeof type !== "undefined") ? this.gamedatas.piece_types[type] : null;
-          const name = (pt && pt.name) ? pt.name : "";
-          piece.textContent = name;
-        }
-
-        console.log(`[togglePiece] ${pieceId}が${newFace}に切り替わりました`);
-      });
     },
 
     getMappedContainerId: function (dbContainerId, position) {
