@@ -156,8 +156,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         if (panelBtn) this.setButtonEnabled(panelBtn, true);
       }, 800); // Increased to 800ms for safety
 
-      if (stateName === "genMove" && this.isCurrentPlayerActive()) {
-        this.setupGenMovePhase();
+      if (stateName === "gen" && this.isCurrentPlayerActive()) {
+        this.setupGenPhase();
       } else if (stateName === "sen" && this.isCurrentPlayerActive()) {
         this.setupSenPhase();
       } else if (stateName === "tsumuHatsu" && this.isCurrentPlayerActive()) {
@@ -176,7 +176,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         return;
       }
 
-      if (stateName === "genMove") {
+      if (stateName === "gen") {
         return;
       } else if (stateName === "sen") {
         return;
@@ -467,19 +467,32 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       this.displayPiece(containerId, existingPieces, pieceId);
     },
 
-    setupGenMovePhase: function () {
-      // inside要素にクリックハンドラを追加
-      const insideIds = ["inside_rival_1", "inside_rival_2", "inside_rival_3"];
-      for (const insideId of insideIds) {
-        const elem = dojo.byId(insideId);
+    setupGenPhase: function () {
+      // 全てのスロットのクリックイベントを一度リセット（推奨）
+      // ただし Dojo 1.x では connect を剥がすのは複雑なので、
+      // ここでは ID を自分側のものに修正し、ターゲットを確定させる
+      var suffix = "myself";
+      var insideIds = [
+        "inside_" + suffix + "_1",
+        "inside_" + suffix + "_2",
+        "inside_" + suffix + "_3"
+      ];
+
+      for (var i = 0; i < insideIds.length; i++) {
+        var id = insideIds[i];
+        var elem = dojo.byId(id);
         if (elem) {
-          dojo.connect(elem, "onclick", this, (function (id) {
-            return () => this.onInsideClick(id);
-          }).call(this, insideId));
+          // 直接のクリックイベントを設定
+          dojo.connect(elem, "onclick", this, (function (targetId) {
+            return function (evt) {
+              dojo.stopEvent(evt);
+              this.onInsideClick(targetId);
+            };
+          }).call(this, id));
         }
       }
 
-      const label = this.getNextButtonLabel("genMove");
+      var label = this.getNextButtonLabel("gen");
       this.addActionButton("btn_next_phase", label, "onNextPhase");
     },
 
@@ -618,16 +631,24 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       this.selectedInsideId = insideId;
 
       // 利用可能なhand（空いているもの）を黄緑化
-      const handIds = ["hand_rival_1", "hand_rival_2"];
-      for (const handId of handIds) {
-        const hand = dojo.byId(handId);
+      var suffix = "myself";
+      var handIds = [
+        "hand_" + suffix + "_1",
+        "hand_" + suffix + "_2"
+      ];
+      for (var i = 0; i < handIds.length; i++) {
+        var handId = handIds[i];
+        var hand = dojo.byId(handId);
         if (hand) {
-          const pieces = dojo.query(".piece", hand);
+          var pieces = dojo.query(".piece", hand);
           if (pieces.length === 0) {
             // 空いている
             dojo.addClass(hand, "available-hand");
             dojo.connect(hand, "onclick", this, (function (hId, iId) {
-              return () => this.onHandClick(hId, iId);
+              return function (evt) {
+                dojo.stopEvent(evt);
+                this.onHandClick(hId, iId);
+              };
             }).call(this, handId, insideId));
           }
         }
