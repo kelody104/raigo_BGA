@@ -747,16 +747,19 @@ class Raigo extends Table
     public function movePieceFromDeck($fromContainer, $toContainer)
     {
         self::checkAction("movePieceFromDeck");
+        $this->notifyAllPlayers("log", "DEBUG: Game movePieceFromDeck start: $fromContainer -> $toContainer", []);
         
         // Check if already taken 2 pieces from deck
         $piecesAlreadyTaken = 0;
         try {
             $piecesAlreadyTaken = (int) self::getGameStateValue('deck_pieces_taken');
+            $this->notifyAllPlayers("log", "DEBUG: piecesAlreadyTaken = $piecesAlreadyTaken", []);
         } catch (Exception $e) {
             $piecesAlreadyTaken = 0;
         }
         
         if ($piecesAlreadyTaken >= 2) {
+            $this->notifyAllPlayers("log", "ERROR: Already taken 2 pieces", []);
             throw new BgaUserException(clienttranslate("You can only take 2 pieces from deck per phase"));
         }
         
@@ -765,6 +768,7 @@ class Raigo extends Table
         // Move piece from deck to target (hand/inside)
         $piece = self::getObjectFromDB("SELECT piece_id, piece_position FROM piece WHERE piece_container = '$fromContainer' LIMIT 1");
         if ($piece) {
+            $this->notifyAllPlayers("log", "DEBUG: Found piece " . $piece['piece_id'] . " in $fromContainer", []);
             self::DbQuery("UPDATE piece SET piece_container = '$toContainer', piece_position = 0 WHERE piece_id = " . $piece['piece_id']);
             
             // Increment the counter
@@ -775,19 +779,27 @@ class Raigo extends Table
             }
             
             $this->notifyAllPlayers("pieceMoved", "", array("fromContainer" => $fromContainer, "toContainer" => $toContainer));
+            $this->notifyAllPlayers("log", "DEBUG: Game movePieceFromDeck success", []);
+        } else {
+            $this->notifyAllPlayers("log", "DEBUG: No piece found in $fromContainer", []);
         }
     }
 
-    public function movePieceToContainer($fromContainer, $toContainer)
+    public function movePieceToHand($fromContainer, $toContainer)
     {
         self::checkAction("movePieceToHand");
+        $this->notifyAllPlayers("log", "DEBUG: Game movePieceToContainer start: $fromContainer -> $toContainer", []);
         $playerId = $this->getActivePlayerId();
 
         // DBから駒を移動
         $piece = self::getObjectFromDB("SELECT piece_id, piece_position FROM piece WHERE piece_container = '$fromContainer' LIMIT 1");
         if ($piece) {
+            $this->notifyAllPlayers("log", "DEBUG: Found piece " . $piece['piece_id'] . " in $fromContainer", []);
             self::DbQuery("UPDATE piece SET piece_container = '$toContainer', piece_position = 0 WHERE piece_id = " . $piece['piece_id']);
             $this->notifyAllPlayers("pieceMoved", "", array("fromContainer" => $fromContainer, "toContainer" => $toContainer));
+            $this->notifyAllPlayers("log", "DEBUG: Game movePieceToContainer success", []);
+        } else {
+             $this->notifyAllPlayers("log", "DEBUG: No piece found in $fromContainer", []);
         }
     }
 

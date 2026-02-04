@@ -1,60 +1,40 @@
 define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, declare) {
   return declare("bgagame.raigo", ebg.core.gamegui, {
     constructor: function () {
+      console.log("constructor called");
       this.phaseOrder = ["setupGame", "kai", "gen", "sen", "tsumuHatsu", "kakure"];
-      this.phaseText = {
-        setupGame: { name: "", sub: "セットアップ中" },
-        kai: { name: "開", sub: "条件を満たさない場合はスキップ" },
-        gen: { name: "現", sub: "insideからhandへ移動" },
-        sen: { name: "選", sub: "雷山から駒を引く" },
-        tsumuHatsu: { name: "積 / 発", sub: "積：塔に重ねる / 発：峡谷へ置いて効果" },
-        kakure: { name: "隠", sub: "隠駒を移動してターン終了" },
-      };
-      this.phaseShortName = {
-        setupGame: null,
-        kai: "開",
-        gen: "現",
-        sen: "選",
-        tsumuHatsu: "発",
-        kakure: "隠",
-      };
-      this.phaseIndexMap = {
-        setupGame: "00",
-        kai: "10",
-        gen: "20",
-        sen: "30",
-        tsumuHatsu: "50",
-        kakure: "80"
-      };
-      this.selectedInsideId = null; // genMove phase中に選択されたinside要素ID
-      this.isMovingToNextPlayer = false; // 手番移動中フラグ
+      // ... (略)
+      this.selectedInsideId = null;
+      this.isMovingToNextPlayer = false;
     },
 
     setup: function (gamedatas) {
       this.gamedatas = gamedatas;
 
-      const btn = dojo.byId("raigo-next-phase");
+      var btn = dojo.byId("raigo-next-phase");
       if (btn) {
         dojo.connect(btn, "onclick", this, "onNextPhase");
       }
 
-      // フェーズパネルのクリックイベント
-      const phasePanel = dojo.byId("raigo-phase-panel");
+      // フェーズパネルのクリチE��イベンチE
+      var phasePanel = dojo.byId("raigo-phase-panel");
       if (phasePanel) {
         dojo.connect(phasePanel, "onclick", this, "onPhasePanelClick");
       }
 
-      // デバッグボタンの接続
-      const debugBtn = dojo.byId("raigo-debug-generate-piece");
+      // チE��チE��ボタンの接綁E
+      var debugBtn = dojo.byId("raigo-debug-generate-piece");
       if (debugBtn) {
         dojo.connect(debugBtn, "onclick", this, "onDebugGeneratePiece");
       }
 
-      // サーバーから受け取った駒データを表示
+      // サーバ�Eから受け取った駒データを表示
       console.log("[setup] gamedatas.pieces:", gamedatas.pieces);
-      if (gamedatas.pieces) {
-        for (const piece of gamedatas.pieces) {
-          // kyoukoku_rivalの駒は表示しない
+      var pieces = gamedatas.pieces;
+      if (pieces) {
+        for (var i = 0; i < pieces.length; i++) {
+          var piece = pieces[i];
+          // kyoukoku_rivalの駒�E表示しなぁE
           if (piece.piece_container.startsWith("kyoukoku")) {
             continue;
           }
@@ -62,43 +42,43 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         }
       }
 
-      const initialState = (gamedatas.gamestate && gamedatas.gamestate.name) ? gamedatas.gamestate.name : "";
+      var initialState = (gamedatas.gamestate && gamedatas.gamestate.name) ? gamedatas.gamestate.name : "";
       this.updatePhaseUI(initialState);
 
-      // プレイヤー視点に応じてボードを回転（コメントアウトされた旧ロジック）
+      // プレイヤー視点に応じてボ�Eドを回転�E�コメントアウトされた旧ロジチE���E�E
       /*
-      const board = dojo.byId("raigo-board");
+      var board = dojo.byId("raigo-board");
       if (board) {
-        const currentPlayerId = this.player_id;
-        const playerB = gamedatas.players ? Object.values(gamedatas.players).find(p => p.player_color !== "ffffff") : null;
-        const playerBId = playerB ? playerB.player_id : null;
+        var currentPlayerId = this.player_id;
+        var playerB = gamedatas.players ? Object.values(gamedatas.players).find(p => p.player_color !== "ffffff") : null;
+        var playerBId = playerB ? playerB.player_id : null;
         
-        // プレイヤーBの場合、ボードを180度回転
+        // プレイヤーBの場合、�Eードを180度回転
         if (currentPlayerId === playerBId) {
           dojo.addClass(board, "board-rotated");
         }
         
-        // デバッグ: 各コンテナにランダムな駒を1つずつ配置
+        // チE��チE��: 吁E��ンチE��にランダムな駒を1つずつ配置
         // this.debugPlacePieces();
       }
       */
 
-      // ボードの自動回転は無効化し、手前=自分の視点をマッピングで実現
+      // ボ�Eド�E自動回転は無効化し、手剁E自刁E�E視点を�EチE��ングで実現
 
 
 
       // Create test pieces
-      const innerBoard = dojo.byId("raigo-board");
+      var innerBoard = dojo.byId("raigo-board");
       if (innerBoard) {
 
-        // 1. Upper group: 16 cols × 2 rows (ura.jpg)
+        // 1. Upper group: 16 cols ÁE2 rows (ura.jpg)
         /* 
-        const cols16 = 16;
-        const width16 = cols16 * pieceWidth;
-        const startLeft16 = (840 - width16) / 2; // Center in 840px container
-        for (let row = 0; row < 2; row++) {
-          for (let col = 0; col < cols16; col++) {
-            const piece = dojo.create("div", { className: "piece", id: `upper-${row}-${col}` }, container);
+        var cols16 = 16;
+        var width16 = cols16 * pieceWidth;
+        var startLeft16 = (840 - width16) / 2; // Center in 840px container
+        for (var row = 0; row < 2; row++) {
+          for (var col = 0; col < cols16; col++) {
+            var piece = dojo.create("div", { className: "piece", id: `upper-${row}-${col}` }, container);
             piece.style.left = `${startLeft16 + col * pieceWidth}px`;
             piece.style.top = `${currentTop + row * pieceHeight}px`;
           }
@@ -106,34 +86,34 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         currentTop += 2 * pieceHeight + space;
         */
 
-        // 2. Middle row 1: 24 cols × 1 row (雷.jpg)
+        // 2. Middle row 1: 24 cols ÁE1 row (雷.jpg)
         /*
-        const cols24 = 24;
-        const width24 = cols24 * pieceWidth;
-        const startLeft24 = (840 - width24) / 2;
-        for (let col = 0; col < cols24; col++) {
-          const piece = dojo.create("div", { className: "new-piece", id: `middle1-${col}` }, container);
+        var cols24 = 24;
+        var width24 = cols24 * pieceWidth;
+        var startLeft24 = (840 - width24) / 2;
+        for (var col = 0; col < cols24; col++) {
+          var piece = dojo.create("div", { className: "new-piece", id: `middle1-${col}` }, container);
           piece.style.left = `${startLeft24 + col * pieceWidth}px`;
           piece.style.top = `${currentTop}px`;
         }
         currentTop += pieceHeight + space;
         */
 
-        // 3. Middle row 2: 24 cols × 1 row (雷.jpg)
+        // 3. Middle row 2: 24 cols ÁE1 row (雷.jpg)
         /*
-        for (let col = 0; col < cols24; col++) {
-          const piece = dojo.create("div", { className: "new-piece", id: `middle2-${col}` }, container);
+        for (var col = 0; col < cols24; col++) {
+          var piece = dojo.create("div", { className: "new-piece", id: `middle2-${col}` }, container);
           piece.style.left = `${startLeft24 + col * pieceWidth}px`;
           piece.style.top = `${currentTop}px`;
         }
         currentTop += pieceHeight + space;
         */
 
-        // 4. Lower group: 16 cols × 2 rows (ura.jpg)
+        // 4. Lower group: 16 cols ÁE2 rows (ura.jpg)
         /*
-        for (let row = 0; row < 2; row++) {
-          for (let col = 0; col < cols16; col++) {
-            const piece = dojo.create("div", { className: "piece", id: `lower-${row}-${col}` }, container);
+        for (var row = 0; row < 2; row++) {
+          for (var col = 0; col < cols16; col++) {
+            var piece = dojo.create("div", { className: "piece", id: `lower-${row}-${col}` }, container);
             piece.style.left = `${startLeft16 + col * pieceWidth}px`;
             piece.style.top = `${currentTop + row * pieceHeight}px`;
           }
@@ -150,8 +130,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         this.isNextPhaseLocked = false;
 
         // Ensure buttons are enabled visually if they exist
-        const btn = dojo.byId("btn_next_phase");
-        const panelBtn = dojo.byId("raigo-next-phase");
+        var btn = dojo.byId("btn_next_phase");
+        var panelBtn = dojo.byId("raigo-next-phase");
         if (btn) this.setButtonEnabled(btn, true);
         if (panelBtn) this.setButtonEnabled(panelBtn, true);
       }, 800); // Increased to 800ms for safety
@@ -185,7 +165,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         return;
       }
 
-      const label = this.getNextButtonLabel(stateName);
+      var label = this.getNextButtonLabel(stateName);
       this.addActionButton("btn_next_phase", label, "onNextPhase");
     },
 
@@ -200,38 +180,38 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     onSetupPieces: function (notif) {
-      // ページをリロードして最新状態を表示（暫定対応。本来は個別に移動アニメーションさせるのが望ましい）
-      // ただし、この通知が来るときは getAllDatas でも最新が取れるはず。
-      // すでに画面に駒がある場合は重複しないよう注意が必要。
-      this.showMessage("セットアップ完了。駒を配置します...", "info");
-      // 簡易的に全駒再描画（既存の駒を削除してから）
+      // ペ�Eジをリロードして最新状態を表示�E�暫定対応。本来は個別に移動アニメーションさせる�Eが望ましい�E�E
+      // ただし、この通知が来るとき�E getAllDatas でも最新が取れるはず、E
+      // すでに画面に駒がある場合�E重褁E��なぁE��ぁE��意が忁E��、E
+      this.showMessage("セチE��アチE�E完亁E��駒を配置しまぁE..", "info");
+      // 簡易的に全駒�E描画�E�既存�E駒を削除してから�E�E
       dojo.query(".piece").forEach(dojo.destroy);
       if (this.gamedatas.pieces) {
-        // 注: この時点での gamedatas.pieces は古い可能性があるため、
-        // サーバーから渡された pieces リストを反映するのが正解。
-        // とりあえずリロードで確実に最新を表示させる。
+        // 注: こ�E時点での gamedatas.pieces は古ぁE��能性があるため、E
+        // サーバ�Eから渡されぁEpieces リストを反映するのが正解、E
+        // とりあえずリロードで確実に最新を表示させる、E
         window.location.reload();
       }
     },
 
     onYakuCompleted: function (notif) {
-      const yakuName = notif.args.yaku_name;
-      const score = notif.args.score;
-      const towerId = notif.args.towerId;
+      var yakuName = notif.args.yaku_name;
+      var score = notif.args.score;
+      var towerId = notif.args.towerId;
 
-      this.showMessage(dojo.string.substitute("役完成: ${yaku_name} (${score}点)", {
+      this.showMessage(dojo.string.substitute("役完�E: ${yaku_name} (${score}点)", {
         yaku_name: yakuName,
         score: score
       }), "info");
 
-      // エフェクトがあればここに追加（例: 塔の発光など）
-      const tower = dojo.byId(towerId);
+      // エフェクトがあればここに追加�E�侁E 塔�E発光など�E�E
+      var tower = dojo.byId(towerId);
       if (tower) {
         dojo.animateProperty({
           node: tower,
           duration: 1000,
           properties: {
-            backgroundColor: { start: "#ffff00", end: "transparent" } // 黄色点滅
+            backgroundColor: { start: "#ffff00", end: "transparent" } // 黁E��点滁E
           }
         }).play();
       }
@@ -241,37 +221,37 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     onTowerCleared: function (notif) {
-      const towerId = notif.args.towerId;
-      // 実際にはonPieceMovedでexclusionへ移動するはずだが、
-      // ここで特定の演出や安全策としてのクリアを行う
-      // 今回はonPieceMovedでの移動を信頼し、ここではログ出力のみ
+      var towerId = notif.args.towerId;
+      // 実際にはonPieceMovedでexclusionへ移動する�Eずだが、E
+      // ここで特定�E演�EめE���E策としてのクリアを行う
+      // 今回はonPieceMovedでの移動を信頼し、ここではログ出力�Eみ
       console.log(`Tower cleared: ${towerId}`);
     },
 
     setupTsumuHatsuPhase: function () {
-      // 自分の手札（hand_myself_1, hand_myself_2）にある駒をクリック可能にする
-      const handIds = ["hand_myself_1", "hand_myself_2"];
+      // 自刁E�E手札�E�Eand_myself_1, hand_myself_2�E�にある駒をクリチE��可能にする
+      var handIds = ["hand_myself_1", "hand_myself_2"];
 
-      for (const handId of handIds) {
-        const hand = dojo.byId(handId);
+      for (var handId of handIds) {
+        var hand = dojo.byId(handId);
         if (hand) {
-          const pieces = dojo.query(".piece", hand);
+          var pieces = dojo.query(".piece", hand);
           pieces.forEach((piece) => {
-            // 既存のハンドラがある可能性を考慮して connect
+            // 既存�Eハンドラがある可能性を老E�Eして connect
             dojo.addClass(piece, "selectable-piece");
-            const handler = dojo.connect(piece, "onclick", this, (function (pId) {
+            var handler = dojo.connect(piece, "onclick", this, (function (pId) {
               return (evt) => {
                 dojo.stopEvent(evt);
                 this.onHandPieceClick(pId, handId);
               };
             }).call(this, piece.id));
-            // 注意: クリーンアップが必要だが簡易実装のため省略
-            // 本来は phase 終了時に disconnect すべき
+            // 注愁E クリーンアチE�Eが忁E��だが簡易実裁E�Eため省略
+            // 本来は phase 終亁E��に disconnect すべぁE
           });
         }
       }
 
-      const label = this.getNextButtonLabel("tsumuHatsu");
+      var label = this.getNextButtonLabel("tsumuHatsu");
       this.addActionButton("btn_next_phase", label, "onNextPhase");
     },
 
@@ -280,7 +260,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       this.selectedPieceId = pieceId.split('-')[2] || pieceId;
 
-      // SELECT された視覚効果
+      // SELECT された視覚効极E
       dojo.query(".selected-piece").removeClass("selected-piece");
       dojo.addClass(dojo.byId(pieceId), "selected-piece");
 
@@ -288,7 +268,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       dojo.query(".selectable-tower").removeClass("selectable-tower");
       dojo.query(".tower-column").addClass("selectable-tower");
 
-      const towers = dojo.query(".tower-column");
+      var towers = dojo.query(".tower-column");
       towers.forEach((tower) => {
         if (!tower.hasAttribute("data-click-connected")) {
           dojo.connect(tower, "onclick", this, (function (tId) {
@@ -305,7 +285,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       // 2. 峡谷を選択可能にする (kyoukoku_myself)
       // kyoukoku_myself は div#kyoukoku_myself
-      const kyoukoku = dojo.byId("kyoukoku_myself");
+      var kyoukoku = dojo.byId("kyoukoku_myself");
       if (kyoukoku) {
         dojo.query(".selectable-kyoukoku").removeClass("selectable-kyoukoku"); // Reset any previously selected kyoukoku
         dojo.addClass(kyoukoku, "selectable-kyoukoku");
@@ -326,7 +306,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
     onTowerClick: function (towerId) {
       if (!this.selectedPieceId) return;
-      let idVal = this.selectedPieceId;
+      var idVal = this.selectedPieceId;
 
       this.ajaxcall(
         "/raigo/raigo/actTsumu.html",
@@ -348,7 +328,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
     onKyoukokuClick: function (kyoukokuId) {
       if (!this.selectedPieceId) return;
-      let idVal = this.selectedPieceId;
+      var idVal = this.selectedPieceId;
 
       this.ajaxcall(
         "/raigo/raigo/actHatsu.html",
@@ -369,10 +349,10 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     setupKakurePhase: function () {
-      // 自分の塔（tower_myself_1..7）のみ選択可能にする
+      // 自刁E�E塔！Eower_myself_1..7�E��Eみ選択可能にする
       dojo.query(".selectable-tower").removeClass("selectable-tower");
 
-      const towers = dojo.query("[id^='tower_myself_']");
+      var towers = dojo.query("[id^='tower_myself_']");
       towers.addClass("selectable-tower");
 
       towers.forEach((tower) => {
@@ -389,7 +369,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         }
       });
 
-      const label = this.getNextButtonLabel("kakure");
+      var label = this.getNextButtonLabel("kakure");
       this.addActionButton("btn_next_phase", label, "onNextPhase");
     },
 
@@ -414,8 +394,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     onKakureMoved: function (notif) {
       console.log("Kakure moved to " + notif.args.pos);
 
-      const towerId = notif.args.towerId;
-      const tower = dojo.byId(towerId);
+      var towerId = notif.args.towerId;
+      var tower = dojo.byId(towerId);
       if (tower) {
         dojo.query(".kakure-marker").forEach(dojo.destroy);
         dojo.create("div", {
@@ -428,22 +408,22 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     onInsideSelected: function (notif) {
-      // inside選択時の通知（クライアント側の状態更新）
+      // inside選択時の通知�E�クライアント�Eの状態更新�E�E
       this.selectedInsideId = notif.args.insideId;
       console.log(`Selected inside: ${this.selectedInsideId}`);
     },
 
     onPieceMoved: function (notif) {
-      // 駒移動完了時の通知
-      const fromContainer = notif.args.fromContainer;
-      const toContainer = notif.args.toContainer;
+      // 駒移動完亁E��の通知
+      var fromContainer = notif.args.fromContainer;
+      var toContainer = notif.args.toContainer;
       console.log(`Piece moved from ${fromContainer} to ${toContainer}`);
 
-      // DOM上で駒を移動
-      const fromElem = dojo.byId(fromContainer);
-      const toElem = dojo.byId(toContainer);
+      // DOM上で駒を移勁E
+      var fromElem = dojo.byId(fromContainer);
+      var toElem = dojo.byId(toContainer);
       if (fromElem && toElem) {
-        const piece = dojo.query(".piece", fromElem)[0];
+        var piece = dojo.query(".piece", fromElem)[0];
         if (piece) {
           dojo.place(piece, toElem);
         }
@@ -451,26 +431,24 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     onPiecePlaced: function (notif) {
-      const containerId = notif.args.container;
+      var containerId = notif.args.container;
 
-      const container = dojo.byId(containerId);
+      var container = dojo.byId(containerId);
       if (!container) {
-        console.error(`コンテナ '${containerId}' が見つかりません`);
+        console.error(`コンチE�� '${containerId}' が見つかりません`);
         return;
       }
 
-      // 実際のコンテナ内の駒数をカウント
-      const existingPieces = dojo.query(".piece", container).length;
+      // 実際のコンチE��冁E�E駒数をカウンチE
+      var existingPieces = dojo.query(".piece", container).length;
 
-      // 駒IDを一意に生成
-      const pieceId = `piece-${containerId}-${Date.now()}-${existingPieces}`;
+      // 駒IDを一意に生�E
+      var pieceId = `piece-${containerId}-${Date.now()}-${existingPieces}`;
       this.displayPiece(containerId, existingPieces, pieceId);
     },
 
     setupGenPhase: function () {
-      // 全てのスロットのクリックイベントを一度リセット（推奨）
-      // ただし Dojo 1.x では connect を剥がすのは複雑なので、
-      // ここでは ID を自分側のものに修正し、ターゲットを確定させる
+      console.log("setupGenPhase called");
       var suffix = "myself";
       var insideIds = [
         "inside_" + suffix + "_1",
@@ -482,9 +460,10 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         var id = insideIds[i];
         var elem = dojo.byId(id);
         if (elem) {
-          // 直接のクリックイベントを設定
+          console.log("Connecting click for: " + id);
           dojo.connect(elem, "onclick", this, (function (targetId) {
             return function (evt) {
+              console.log("Inside slot clicked: " + targetId);
               dojo.stopEvent(evt);
               this.onInsideClick(targetId);
             };
@@ -497,52 +476,52 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     setupSenPhase: function () {
-      // deck要素にクリックハンドラを追加
-      const deckIds = ["deck_rival", "deck_myself"];
+      // deck要素にクリチE��ハンドラを追加
+      var deckIds = ["deck_rival", "deck_myself"];
 
       // Current number of pieces taken from deck in this phase
-      const piecesTaken = this.gamedatas.deck_pieces_taken || 0;
-      const canTakeMore = piecesTaken < 2;
+      var piecesTaken = this.gamedatas.deck_pieces_taken || 0;
+      var canTakeMore = piecesTaken < 2;
 
       if (!canTakeMore) {
         // Already taken 2 pieces, skip deck interaction
-        const label = this.getNextButtonLabel("sen");
+        var label = this.getNextButtonLabel("sen");
         this.addActionButton("btn_next_phase", label, "onNextPhase");
         return;
       }
 
-      for (const deckId of deckIds) {
-        const elem = dojo.byId(deckId);
+      for (var deckId of deckIds) {
+        var elem = dojo.byId(deckId);
         if (elem) {
           dojo.connect(elem, "onclick", this, (function (id) {
-            return () => this.onDeckClick("deck"); // クリックされた場所に関わらずコンテナは 'deck'
+            return () => this.onDeckClick("deck"); // クリチE��された場所に関わらずコンチE��は 'deck'
           }).call(this, deckId));
         }
       }
 
-      const label = this.getNextButtonLabel("sen");
+      var label = this.getNextButtonLabel("sen");
       this.addActionButton("btn_next_phase", label, "onNextPhase");
     },
 
     onDeckClick: function (deckId) {
       if (!this.isCurrentPlayerActive()) return;
 
-      // deckId は常に "deck" として渡される
-      // 実際のDOM要素は deck_rival または deck_myself を想定
-      // ここではクリックされた要素を特定する必要がないため、汎用的な "deck" を使用
+      // deckId は常に "deck" として渡されめE
+      // 実際のDOM要素は deck_rival また�E deck_myself を想宁E
+      // ここではクリチE��された要素を特定する忁E��がなぁE��め、汎用皁E�� "deck" を使用
 
-      // 駒の存在チェックはサーバー側で行うか、displayPieceのロジックで判断
-      // const container = dojo.byId(deckId); // このIDの要素は存在しない可能性が高い
+      // 駒�E存在チェチE��はサーバ�E側で行うか、displayPieceのロジチE��で判断
+      // var container = dojo.byId(deckId); // こ�EIDの要素は存在しなぁE��能性が高い
       // if (!container) return;
 
-      // const piece = dojo.query(".piece", container)[0];
+      // var piece = dojo.query(".piece", container)[0];
       // if (!piece) {
       //   console.log(`No piece in ${deckId}`);
       //   return;
       // }
 
       // Check if we've already taken 2 pieces
-      const piecesTaken = this.gamedatas.deck_pieces_taken || 0;
+      var piecesTaken = this.gamedatas.deck_pieces_taken || 0;
       if (piecesTaken >= 2) {
         console.log("Already taken 2 pieces from deck");
         return;
@@ -553,17 +532,17 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         dojo.removeClass(elem, "available-hand");
       });
 
-      // 利用可能なhand/insideを黄緑化
-      const targetIds = ["hand_rival_1", "hand_rival_2", "inside_rival_1", "inside_rival_2", "inside_rival_3"];
-      for (const targetId of targetIds) {
-        const target = dojo.byId(targetId);
+      // 利用可能なhand/insideを黁E��化
+      var targetIds = ["hand_rival_1", "hand_rival_2", "inside_rival_1", "inside_rival_2", "inside_rival_3"];
+      for (var targetId of targetIds) {
+        var target = dojo.byId(targetId);
         if (target) {
-          const pieces = dojo.query(".piece", target);
+          var pieces = dojo.query(".piece", target);
           if (pieces.length === 0) {
-            // 空いている
+            // 空ぁE��ぁE��
             dojo.addClass(target, "available-hand");
             // Store handler reference for later cleanup
-            const handler = dojo.connect(target, "onclick", this, (function (tId, dId) {
+            var handler = dojo.connect(target, "onclick", this, (function (tId, dId) {
               return () => {
                 // Disconnect all target handlers first
                 dojo.query(".available-hand").forEach(function (elem) {
@@ -585,26 +564,26 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         dojo.removeClass(elem, "available-hand");
       });
 
-      // サーバーへ移動リクエスト送信
+      // サーバ�Eへ移動リクエスト送信
       this.ajaxcall(
         "/raigo/raigo/movePieceFromDeck.html",
         {
-          fromContainer: "deck", // コンテナ名は常に 'deck'
+          fromContainer: "deck", // コンチE��名�E常に 'deck'
           toContainer: targetId
         },
         this,
         (function () {
           // Update piece count after successful move
-          const piecesTaken = (this.gamedatas.deck_pieces_taken || 0) + 1;
+          var piecesTaken = (this.gamedatas.deck_pieces_taken || 0) + 1;
           this.gamedatas.deck_pieces_taken = piecesTaken;
 
           // If 2 pieces already taken, disable further deck clicks
           if (piecesTaken >= 2) {
             console.log("2 pieces taken, disabling deck selection");
             // Visually disable decks
-            const deckIds = ["deck_rival", "deck_myself"];
-            for (const deckId of deckIds) {
-              const elem = dojo.byId(deckId);
+            var deckIds = ["deck_rival", "deck_myself"];
+            for (var deckId of deckIds) {
+              var elem = dojo.byId(deckId);
               if (elem) {
                 elem.style.cursor = "default";
                 elem.style.opacity = "0.6";
@@ -619,10 +598,10 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     onInsideClick: function (insideId) {
       if (!this.isCurrentPlayerActive()) return;
 
-      const container = dojo.byId(insideId);
+      var container = dojo.byId(insideId);
       if (!container) return;
 
-      const piece = dojo.query(".piece", container)[0];
+      var piece = dojo.query(".piece", container)[0];
       if (!piece) {
         console.log(`No piece in ${insideId}`);
         return;
@@ -630,7 +609,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       this.selectedInsideId = insideId;
 
-      // 利用可能なhand（空いているもの）を黄緑化
+      // 利用可能なhand�E�空ぁE��ぁE��も�E�E�を黁E��化
       var suffix = "myself";
       var handIds = [
         "hand_" + suffix + "_1",
@@ -642,7 +621,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         if (hand) {
           var pieces = dojo.query(".piece", hand);
           if (pieces.length === 0) {
-            // 空いている
+            // 空ぁE��ぁE��
             dojo.addClass(hand, "available-hand");
             dojo.connect(hand, "onclick", this, (function (hId, iId) {
               return function (evt) {
@@ -658,7 +637,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     onHandClick: function (handId, insideId) {
       if (!this.isCurrentPlayerActive()) return;
 
-      // サーバーへ移動リクエスト送信
+      // サーバ�Eへ移動リクエスト送信
       this.ajaxcall(
         "/raigo/raigo/movePieceToHand.html",
         {
@@ -675,48 +654,48 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     displayPiece: function (containerId, position, pieceId, type, face) {
-      let parentContainerId = containerId;
-      let renderPosition = position;
+      var parentContainerId = containerId;
+      var renderPosition = position;
 
-      // deck コンテナの場合は、position に応じて rival/myself に振り分け
+      // deck コンチE��の場合�E、position に応じて rival/myself に振り�EぁE
       if (containerId === "deck") {
         parentContainerId = (position % 2 === 0) ? "deck_rival" : "deck_myself";
         renderPosition = Math.floor(position / 2);
       } else {
-        // deck 以外の場合はマッピングを試みる
-        const mappedId = this.getMappedContainerId(containerId, position);
+        // deck 以外�E場合�Eマッピングを試みめE
+        var mappedId = this.getMappedContainerId(containerId, position);
         if (mappedId && mappedId !== parentContainerId) {
           parentContainerId = mappedId;
-          // inside や moon などの単一枠コンテナの場合は、その中での位置を 0 に固定
+          // inside めEmoon などの単一枠コンチE��の場合�E、その中での位置めE0 に固宁E
           if (parentContainerId.indexOf("inside_") === 0 || parentContainerId.indexOf("moon_") === 0) {
             renderPosition = 0;
           }
         }
       }
 
-      const finalContainer = dojo.byId(parentContainerId);
+      var finalContainer = dojo.byId(parentContainerId);
       if (!finalContainer) {
-        console.error(`コンテナ '${containerId}' (mapped: '${parentContainerId}') が見つかりません`);
+        console.error(`コンチE�� '${containerId}' (mapped: '${parentContainerId}') が見つかりません`);
         return;
       }
 
-      // 駒をコンテナの直接の子として生成
-      const piece = dojo.create("div", {
+      // 駒をコンチE��の直接の子として生�E
+      var piece = dojo.create("div", {
         className: "piece",
         id: pieceId
       }, finalContainer);
 
       piece.style.position = "absolute";
 
-      // 基本寸法
+      // 基本寸況E
       piece.style.width = "35px";
       piece.style.height = "35px";
 
-      // 表裏に応じてCSSクラスとテキストを付与
-      const t = type;
-      const pt = (this.gamedatas && this.gamedatas.piece_types && typeof t !== "undefined") ? this.gamedatas.piece_types[t] : null;
-      const name = (pt && pt.name) ? pt.name : "";
-      const weight = (pt && pt.weight) ? pt.weight : 1;
+      // 表裏に応じてCSSクラスとチE��ストを付丁E
+      var t = type;
+      var pt = (this.gamedatas && this.gamedatas.piece_types && typeof t !== "undefined") ? this.gamedatas.piece_types[t] : null;
+      var name = (pt && pt.name) ? pt.name : "";
+      var weight = (pt && pt.weight) ? pt.weight : 1;
 
       if (face === "front") {
         dojo.addClass(piece, "piece-front");
@@ -724,8 +703,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         piece.textContent = name;
         piece.style.fontWeight = "700";
 
-        // 上側コンテナの駒は180度回転させる（deck除外）
-        const topContainers = ["kyoukoku_rival", "hand_rival_1", "hand_rival_2", "inside_rival_1", "inside_rival_2", "inside_rival_3", "oumoncircle_rival_1", "oumoncircle_rival_2", "oumoncircle_rival_3", "moon_rival", "deck_rival", "tower_rival_1", "tower_rival_2", "tower_rival_3", "tower_rival_4", "tower_rival_5", "tower_rival_6", "tower_rival_7"];
+        // 上�EコンチE��の駒�E180度回転させる！Eeck除外！E
+        var topContainers = ["kyoukoku_rival", "hand_rival_1", "hand_rival_2", "inside_rival_1", "inside_rival_2", "inside_rival_3", "oumoncircle_rival_1", "oumoncircle_rival_2", "oumoncircle_rival_3", "moon_rival", "deck_rival", "tower_rival_1", "tower_rival_2", "tower_rival_3", "tower_rival_4", "tower_rival_5", "tower_rival_6", "tower_rival_7"];
         if (topContainers.includes(parentContainerId)) {
           dojo.addClass(piece, "piece-rotated");
         }
@@ -737,25 +716,25 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       console.log(`[displayPiece] id=${pieceId}, container=${containerId}, type=${type}, face=${face}`);
 
-      // コンテナタイプで異なるレイアウトを適用
+      // コンチE��タイプで異なるレイアウトを適用
       if (parentContainerId.startsWith("kyoukoku")) {
         piece.style.left = `${renderPosition * 35}px`;
         piece.style.top = "0";
       } else if (parentContainerId.startsWith("deck")) {
-        const rowIndex = Math.floor(renderPosition / 2);
-        const isTopRow = renderPosition % 2 === 0;
+        var rowIndex = Math.floor(renderPosition / 2);
+        var isTopRow = renderPosition % 2 === 0;
         piece.style.left = `${rowIndex * 35}px`;
         piece.style.top = isTopRow ? "0" : "35px";
       } else if (parentContainerId.startsWith("tower_rival")) {
-        // tower_rival: 下から上に向かって積み上がる（ライン側から）
+        // tower_rival: 下から上に向かって積み上がる（ライン側から�E�E
         piece.style.left = "0";
         piece.style.top = `${210 - (renderPosition + 1) * 35}px`;
       } else if (parentContainerId.startsWith("tower_myself")) {
-        // tower_myself: 上から下に向かって積み上がる（ライン側から）
+        // tower_myself: 上から下に向かって積み上がる（ライン側から�E�E
         piece.style.left = "0";
         piece.style.top = `${renderPosition * 35}px`;
       } else if (parentContainerId === "exclusion") {
-        // exclusion: スタック（重ねて表示）
+        // exclusion: スタチE���E�重ねて表示�E�E
         piece.style.left = "0";
         piece.style.top = "0";
       } else {
@@ -775,33 +754,33 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
 
       // inside_p{playerId} -> inside_{myself|rival}_{pos+1}
       if (dbContainerId.indexOf("inside_p") === 0) {
-        const parts = dbContainerId.split("_"); // inside, p{playerId}
-        const playerId = parts[1].substring(1);
-        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        var parts = dbContainerId.split("_"); // inside, p{playerId}
+        var playerId = parts[1].substring(1);
+        var suffix = (playerId == this.player_id) ? "myself" : "rival";
         // position 0, 1, 2 -> 1, 2, 3
-        const posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
+        var posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
         return `inside_${suffix}_${posIndex}`;
       }
 
       // hand_p{playerId} -> hand_{myself|rival}_{pos+1}
       if (dbContainerId.indexOf("hand_p") === 0) {
-        const parts = dbContainerId.split("_");
-        const playerId = parts[1].substring(1);
-        const suffix = (playerId == this.player_id) ? "myself" : "rival";
-        const posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
+        var parts = dbContainerId.split("_");
+        var playerId = parts[1].substring(1);
+        var suffix = (playerId == this.player_id) ? "myself" : "rival";
+        var posIndex = (typeof position !== "undefined") ? (parseInt(position) + 1) : 1;
         return `hand_${suffix}_${posIndex}`;
       }
 
-      // hand3_p{playerId} -> hand_{myself|rival}_{pos+1} (奥義駒)
+      // hand3_p{playerId} -> hand_{myself|rival}_{pos+1} (奥義駁E
       if (dbContainerId.indexOf("hand3_p") === 0) {
         return null;
       }
 
       // moon_p{playerId} -> moon_{myself|rival}
       if (dbContainerId.indexOf("moon_p") === 0) {
-        const parts = dbContainerId.split("_");
-        const playerId = parts[1].substring(1);
-        const suffix = (playerId == this.player_id) ? "myself" : "rival";
+        var parts = dbContainerId.split("_");
+        var playerId = parts[1].substring(1);
+        var suffix = (playerId == this.player_id) ? "myself" : "rival";
         return `moon_${suffix}`;
       }
 
@@ -836,20 +815,20 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     getNextButtonLabel: function (stateName) {
-      const idx = this.getPhaseIndex(stateName);
+      var idx = this.getPhaseIndex(stateName);
       if (idx === -1) return "次へ";
-      if (stateName === "kakure") return "手番終了（次の手番へ）";
+      if (stateName === "kakure") return "手番終亁E��次の手番へ�E�E;
 
-      const nextState = this.phaseOrder[idx + 1];
-      const nextName = (this.phaseText[nextState] && this.phaseText[nextState].name) ? this.phaseText[nextState].name : "次";
-      return `次へ：${nextName}`;
+      var nextState = this.phaseOrder[idx + 1];
+      var nextName = (this.phaseText[nextState] && this.phaseText[nextState].name) ? this.phaseText[nextState].name : "次";
+      return `次へ�E�E{nextName}`;
     },
 
     updatePhaseUI: function (stateName) {
-      const nameEl = dojo.byId("raigo-phase-name");
-      const subEl = dojo.byId("raigo-phase-sub");
-      const btnEl = dojo.byId("raigo-next-phase");
-      const panelEl = dojo.byId("raigo-phase-panel");
+      var nameEl = dojo.byId("raigo-phase-name");
+      var subEl = dojo.byId("raigo-phase-sub");
+      var btnEl = dojo.byId("raigo-next-phase");
+      var panelEl = dojo.byId("raigo-phase-panel");
 
       if (!nameEl || !subEl || !btnEl) {
         return;
@@ -858,7 +837,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       if (!this.isPhaseState(stateName)) {
         nameEl.innerHTML = "-";
         subEl.innerHTML = "-";
-        btnEl.innerHTML = "待機中";
+        btnEl.innerHTML = "征E��中";
         this.setButtonEnabled(btnEl, false);
         if (panelEl) {
           dojo.removeClass(panelEl, "panel-active-turn");
@@ -867,19 +846,19 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         return;
       }
 
-      const shortName = this.phaseShortName[stateName];
-      const phaseNum = this.phaseIndexMap[stateName] || "--";
+      var shortName = this.phaseShortName[stateName];
+      var phaseNum = this.phaseIndexMap[stateName] || "--";
 
-      // 番号を表示 (raigo.css 側で .phase-number などのスタイルが必要かもしれません)
-      const phaseNumHtml = `<div class="phase-number" style="font-size:10px; opacity:0.6; position:absolute; top:5px; left:5px;">${phaseNum}</div>`;
+      // 番号を表示 (raigo.css 側で .phase-number などのスタイルが忁E��かもしれません)
+      var phaseNumHtml = `<div class="phase-number" style="font-size:10px; opacity:0.6; position:absolute; top:5px; left:5px;">${phaseNum}</div>`;
 
       if (stateName === "tsumuHatsu") {
-        nameEl.innerHTML = phaseNumHtml + '<div class="phase-text-container"><span class="phase-tsumuHatsu-left">積</span><span class="phase-tsumuHatsu-right">発</span></div>';
+        nameEl.innerHTML = phaseNumHtml + '<div class="phase-text-container"><span class="phase-tsumuHatsu-left">穁E/span><span class="phase-tsumuHatsu-right">発</span></div>';
       } else {
         nameEl.innerHTML = phaseNumHtml + (shortName || "");
       }
 
-      subEl.innerHTML = this.isCurrentPlayerActive() ? "あなたの手番です" : "相手の手番です";
+      subEl.innerHTML = this.isCurrentPlayerActive() ? "あなた�E手番でぁE : "相手�E手番でぁE;
 
       btnEl.innerHTML = this.getNextButtonLabel(stateName);
       this.setButtonEnabled(btnEl, this.isCurrentPlayerActive());
@@ -924,8 +903,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       this.isNextPhaseLocked = true;
 
       // Disable button visually
-      const btn = dojo.byId("btn_next_phase"); // Action button
-      const panelBtn = dojo.byId("raigo-next-phase"); // Panel button
+      var btn = dojo.byId("btn_next_phase"); // Action button
+      var panelBtn = dojo.byId("raigo-next-phase"); // Panel button
       if (btn) this.setButtonEnabled(btn, false);
       if (panelBtn) this.setButtonEnabled(panelBtn, false);
 
@@ -960,7 +939,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       this.isNextPhaseLocked = true;
 
       // Disable button visually to indicate processing
-      const btn = dojo.byId("btn_next_phase");
+      var btn = dojo.byId("btn_next_phase");
       if (btn) this.setButtonEnabled(btn, false);
 
       this.ajaxcall(
@@ -994,30 +973,30 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         dojo.stopEvent(evt);
       }
 
-      const inputEl = dojo.byId("raigo-debug-container-id");
-      const containerId = inputEl ? inputEl.value.trim() : "";
+      var inputEl = dojo.byId("raigo-debug-container-id");
+      var containerId = inputEl ? inputEl.value.trim() : "";
 
       if (!containerId) {
-        alert("コンテナIDを入力してください");
+        alert("コンチE��IDを�E力してください");
         return;
       }
 
-      const container = dojo.byId(containerId);
+      var container = dojo.byId(containerId);
       if (!container) {
-        alert(`コンテナ '${containerId}' が見つかりません`);
+        alert(`コンチE�� '${containerId}' が見つかりません`);
         return;
       }
 
-      // DB保存チェックボックスの状態を取得
-      const persistCheckbox = dojo.byId("raigo-debug-persist");
-      const persist = persistCheckbox ? persistCheckbox.checked : false;
+      // DB保存チェチE��ボックスの状態を取征E
+      var persistCheckbox = dojo.byId("raigo-debug-persist");
+      var persist = persistCheckbox ? persistCheckbox.checked : false;
 
-      // 即座にローカルで駒を生成
-      const existingPieces = dojo.query(".piece", container).length;
-      const pieceId = `piece-${containerId}-${Date.now()}-${existingPieces}`;
+      // 即座にローカルで駒を生�E
+      var existingPieces = dojo.query(".piece", container).length;
+      var pieceId = `piece-${containerId}-${Date.now()}-${existingPieces}`;
       this.displayPiece(containerId, existingPieces, pieceId);
 
-      // 非同期でサーバーに通知（他プレイヤーへの同期用）
+      // 非同期でサーバ�Eに通知�E�他�Eレイヤーへの同期用�E�E
       this.ajaxcall(
         "/raigo/raigo/debugGeneratePiece.html",
         {
@@ -1026,7 +1005,7 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         },
         this,
         function (result) {
-          console.log(`駒をサーバー経由で生成しました: ${containerId} (DB保存: ${persist})`);
+          console.log(`駒をサーバ�E経由で生�Eしました: ${containerId} (DB保孁E ${persist})`);
         }
       );
     },
@@ -1036,10 +1015,10 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       var self = this;
 
       // kyoukoku_rival, myself に24個ずつ
-      const kyoukokuContainers = ["kyoukoku_rival", "kyoukoku_myself"];
-      for (const containerId of kyoukokuContainers) {
-        for (let position = 0; position < 24; position++) {
-          const randomType = Math.floor(Math.random() * 88) + 1;
+      var kyoukokuContainers = ["kyoukoku_rival", "kyoukoku_myself"];
+      for (var containerId of kyoukokuContainers) {
+        for (var position = 0; position < 24; position++) {
+          var randomType = Math.floor(Math.random() * 88) + 1;
 
           this.ajaxcall(
             "/raigo/raigo/debugGeneratePiece.html",
@@ -1056,8 +1035,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         }
       }
 
-      // その他のコンテナに各1個ずつ
-      const singleContainers = [
+      // そ�E他�EコンチE��に吁E個ずつ
+      var singleContainers = [
         "inside_rival_1", "inside_rival_2", "inside_rival_3", "inside_myself_1", "inside_myself_2", "inside_myself_3",
         "hand_rival_1", "hand_rival_2", "hand_myself_1", "hand_myself_2",
         "moon_rival", "moon_myself",
@@ -1066,8 +1045,8 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         "tower_myself_1", "tower_myself_2", "tower_myself_3", "tower_myself_4", "tower_myself_5", "tower_myself_6", "tower_myself_7"
       ];
 
-      for (const containerId of singleContainers) {
-        const randomType = Math.floor(Math.random() * 88) + 1;
+      for (var containerId of singleContainers) {
+        var randomType = Math.floor(Math.random() * 88) + 1;
 
         this.ajaxcall(
           "/raigo/raigo/debugGeneratePiece.html",
@@ -1085,9 +1064,9 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
     },
 
     onUpdateGameState: function (stateName, state) {
-      // ゲーム状態が更新されたときにマーカー状態をリセット（「隠」に戻す）
-      const phasePanelTop = dojo.byId("raigo-phase-panel-top");
-      const phasePanelBottom = dojo.byId("raigo-phase-panel-bottom");
+      // ゲーム状態が更新されたときにマ�Eカー状態をリセチE���E�「隠」に戻す！E
+      var phasePanelTop = dojo.byId("raigo-phase-panel-top");
+      var phasePanelBottom = dojo.byId("raigo-phase-panel-bottom");
 
       if (phasePanelTop) {
         dojo.removeClass(phasePanelTop, "phase-state-active");
@@ -1097,34 +1076,34 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
         dojo.removeClass(phasePanelBottom, "phase-state-active");
         dojo.addClass(phasePanelBottom, "phase-state-hidden");
       }
-      // 手番移動フラグをリセット
+      // 手番移動フラグをリセチE��
       this.isMovingToNextPlayer = false;
     },
 
     moveToNextPlayer: function () {
-      // 既に実行中なら二重実行を防ぐ
+      // 既に実行中なら二重実行を防ぁE
       if (this.isMovingToNextPlayer) {
         return;
       }
       this.isMovingToNextPlayer = true;
-      const self = this;
+      var self = this;
 
-      // 手番を移動するAJAX呼び出し
+      // 手番を移動するAJAX呼び出ぁE
       this.ajaxcall(
         "/raigo/raigo/nextPhase.html",
         {},
         this,
         function (result) {
-          // 成功時はonUpdateGameStateが呼ばれてマーカーをリセット
+          // 成功時�EonUpdateGameStateが呼ばれてマ�EカーをリセチE��
           self.isMovingToNextPlayer = false;
         },
         function (isErrorNotified) {
-          // エラーが発生してもフラグをリセット
+          // エラーが発生してもフラグをリセチE��
           self.isMovingToNextPlayer = false;
         }
       );
 
-      // 3秒後にタイムアウト時もフラグをリセット
+      // 3秒後にタイムアウト時もフラグをリセチE��
       setTimeout(function () {
         if (self.isMovingToNextPlayer) {
           self.isMovingToNextPlayer = false;

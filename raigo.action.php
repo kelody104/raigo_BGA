@@ -14,6 +14,7 @@ class action_raigo extends APP_GameAction
     public function actTsumu()
     {
         self::setAjaxMode();
+        $this->game->notifyAllPlayers("log", "DEBUG: Action actTsumu called", []);
         $pieceId = self::getArg("pieceId", AT_int);
         $towerId = self::getArg("towerId", AT_alphanum);
         
@@ -85,12 +86,13 @@ class action_raigo extends APP_GameAction
         self::setAjaxMode();
         $fromContainer = self::getArg("fromContainer", AT_alphanum);
         $toContainer = self::getArg("toContainer", AT_alphanum);
+        $this->game->notifyAllPlayers("log", "DEBUG: Action movePieceToHand called: $fromContainer -> $toContainer", []);
         
         if (empty($fromContainer) || empty($toContainer)) {
             throw new BgaUserException("Invalid container IDs");
         }
 
-        $this->game->movePieceToContainer($fromContainer, $toContainer);
+        $this->game->movePieceToHand($fromContainer, $toContainer);
         self::ajaxResponse();
     }
 
@@ -99,6 +101,7 @@ class action_raigo extends APP_GameAction
         self::setAjaxMode();
         $fromContainer = self::getArg("fromContainer", AT_alphanum);
         $toContainer = self::getArg("toContainer", AT_alphanum);
+        $this->game->notifyAllPlayers("log", "DEBUG: Action movePieceFromDeck called: $fromContainer -> $toContainer", []);
         
         if (empty($fromContainer) || empty($toContainer)) {
             throw new BgaUserException("Invalid container IDs");
