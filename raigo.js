@@ -661,15 +661,15 @@ define(["dojo", "dojo/_base/declare", "ebg/core/gamegui"], function (dojo, decla
       if (containerId === "deck") {
         parentContainerId = (position % 2 === 0) ? "deck_rival" : "deck_myself";
         renderPosition = Math.floor(position / 2);
-      }
-
-      // 常にマッピングを試みる
-      const mappedId = this.getMappedContainerId(containerId, position);
-      if (mappedId && mappedId !== parentContainerId) {
-        parentContainerId = mappedId;
-        // inside や moon などの単一枠コンテナの場合は、その中での位置を 0 に固定
-        if (parentContainerId.indexOf("inside_") === 0 || parentContainerId.indexOf("moon_") === 0) {
-          renderPosition = 0;
+      } else {
+        // deck 以外の場合はマッピングを試みる
+        const mappedId = this.getMappedContainerId(containerId, position);
+        if (mappedId && mappedId !== parentContainerId) {
+          parentContainerId = mappedId;
+          // inside や moon などの単一枠コンテナの場合は、その中での位置を 0 に固定
+          if (parentContainerId.indexOf("inside_") === 0 || parentContainerId.indexOf("moon_") === 0) {
+            renderPosition = 0;
+          }
         }
       }
 
